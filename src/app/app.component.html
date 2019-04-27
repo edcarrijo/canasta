@@ -1,0 +1,117 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<main class="p-3">
+  <div class="fluid-container">
+    <div class="row">
+      <div class="col">
+          <button type="button" class="btn btn-light">Opponnent 1</button> 
+          <div>
+            <canasta-card-back [count]="board.opponnent1Count"></canasta-card-back>
+          </div>
+      </div>
+      <div class="col">
+        <button type="button" class="btn btn-light">Opponnent 2</button> 
+          <div>
+            <canasta-card-back [count]="board.opponent2Count"></canasta-card-back>
+          </div>
+      </div>
+    </div>
+    <div class="game-table">
+      <div class="row">
+          <div class="col">
+              Oponnent's table
+          </div>
+          <div class="col-1">
+              Red threes
+              <div>
+                <canasta-card *ngFor="let card of board.opponentsGame.redThrees" [card]="card"></canasta-card>
+              </div>
+          </div>
+      </div>
+      <div class="row neutral-zone">
+          <div class="col">
+              Side deck
+              <div>
+                <canasta-card-back *ngIf="board.sideDeck1Avaible"></canasta-card-back>
+                <canasta-card-back *ngIf="board.sideDeck2Avaible"></canasta-card-back>
+              </div>
+          </div>
+          <div class="col">
+              Discard
+          </div>
+          <div class="col">
+              Main deck
+              <div>
+                <canasta-card-back [count]="board.maindDeckCount"></canasta-card-back>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col">
+              My table
+          </div>
+          <div class="col-1">
+              Red threes
+              <div>
+                <canasta-card *ngFor="let card of board.myGame.redThrees" [card]="card"></canasta-card>
+              </div>
+          </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-light" (click)="openMyActionChoice()">Me</button> 
+          <div>
+            <canasta-card *ngFor="let card of board.myHand" [card]="card"></canasta-card>
+          </div>
+    
+      </div>
+      <div class="col-2">
+          <button type="button" class="btn btn-light">Partner</button> 
+          <div>
+            <canasta-card-back [count]="board.partnerCount"></canasta-card-back>
+          </div>
+      </div>
+    </div>
+    </div>
+</main>
+
+<div class="modal fade" id="action" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Action</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="type-action" class="col-form-label">Type action:</label>
+             <select class="form-control" id="type-action" name="type-action" [(ngModel)]="action.type">
+                <option *ngFor="let action of actionList" [value]="action">{{action}}</option>
+              </select>
+          </div>
+          <div class="form-group row">
+            <div class="col">
+                <label for="suite-select" class="form-label">Suite:</label>
+                <select class="form-control" id="suite-select" name="suite-select" [(ngModel)]="action.suite">
+                  <option *ngFor="let suite of cardSuiteList" [ngValue]="suite">{{suite.symbol}}</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="value-select" class="form-label">Value:</label>
+                <select class="form-control" id="value-select" name="value-select" [(ngModel)]="action.value">
+                    <option *ngFor="let value of cardValueList" [ngValue]="value">{{value.label}}</option>
+                  </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="doAction()">Do action</button>
+      </div>
+    </div>
+  </div>
+</div>
