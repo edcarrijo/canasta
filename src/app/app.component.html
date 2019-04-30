@@ -1,76 +1,60 @@
-<!--The content below is only a placeholder and can be replaced.-->
+
 <main class="p-3">
   <div class="fluid-container">
-    <div class="row">
+    <div class="row justify-content-md-center">
       <div class="col">
-          <button type="button" class="btn btn-light">Opponnent 1</button> 
-          <div>
-            <canasta-card-back [count]="board.opponnent1Count"></canasta-card-back>
-          </div>
+          <button type="button" class="btn btn-light d-block" (click)="openOpponents1Choice()">Opponnent 1</button> 
+          <canasta-card-back [count]="board.opponnent1Count" ></canasta-card-back>
       </div>
-      <div class="col">
-        <button type="button" class="btn btn-light">Opponnent 2</button> 
-          <div>
-            <canasta-card-back [count]="board.opponent2Count"></canasta-card-back>
-          </div>
+      <div class="col-2">
+          <button type="button" class="btn btn-light d-block" (click)="openPartnerChoice()">Partner</button> 
+          <canasta-card-back [count]="board.partnerCount"></canasta-card-back>
       </div>
     </div>
     <div class="game-table">
       <div class="row">
           <div class="col">
-              Oponnent's table
+              <p>Oponnent's table</p>
           </div>
           <div class="col-1">
-              Red threes
-              <div>
-                <canasta-card *ngFor="let card of board.opponentsGame.redThrees" [card]="card"></canasta-card>
-              </div>
+              <p>Red threes</p>
+              <canasta-card *ngFor="let card of board.opponentsGame.redThrees" [card]="card"></canasta-card>
           </div>
       </div>
       <div class="row neutral-zone">
           <div class="col">
-              Side deck
-              <div>
-                <canasta-card-back *ngIf="board.sideDeck1Avaible"></canasta-card-back>
-                <canasta-card-back *ngIf="board.sideDeck2Avaible"></canasta-card-back>
-              </div>
+              <p>Side deck</p>
+              <canasta-card-back *ngIf="board.sideDeck1Avaible"></canasta-card-back>
+              <canasta-card-back *ngIf="board.sideDeck2Avaible"></canasta-card-back>
           </div>
           <div class="col">
-              Discard
+              <p>Discard</p>
+              <canasta-card *ngIf="lastDiscard" [card]="lastDiscard"></canasta-card>
           </div>
           <div class="col">
-              Main deck
-              <div>
-                <canasta-card-back [count]="board.maindDeckCount"></canasta-card-back>
-              </div>
+              <p>Main deck</p>
+              <canasta-card-back [count]="board.maindDeckCount"></canasta-card-back>
           </div>
       </div>
       <div class="row">
           <div class="col">
-              My table
+              <p>My table</p>
           </div>
           <div class="col-1">
-              Red threes
-              <div>
-                <canasta-card *ngFor="let card of board.myGame.redThrees" [card]="card"></canasta-card>
-              </div>
+              <p>Red threes</p>
+              <canasta-card *ngFor="let card of board.myGame.redThrees" [card]="card"></canasta-card>
           </div>
       </div>
     </div>
     
     <div class="row">
       <div class="col">
-        <button type="button" class="btn btn-light" (click)="openMyActionChoice()">Me</button> 
-          <div>
-            <canasta-card *ngFor="let card of board.myHand" [card]="card"></canasta-card>
-          </div>
-    
+        <button type="button" class="btn btn-light d-block" (click)="openMyActionChoice()">Me</button> 
+        <canasta-card *ngFor="let card of board.myHand" [card]="card"></canasta-card>
       </div>
       <div class="col-2">
-          <button type="button" class="btn btn-light">Partner</button> 
-          <div>
-            <canasta-card-back [count]="board.partnerCount"></canasta-card-back>
-          </div>
+          <button type="button" class="btn btn-light d-block" (click)="openOpponents2Choice()">Opponnent 2</button> 
+          <canasta-card-back [count]="board.opponent2Count"></canasta-card-back>
       </div>
     </div>
     </div>

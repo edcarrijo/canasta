@@ -14,9 +14,7 @@ declare var $: any;
   styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit {
-  TOTAl_DECK_CARDS = 52;
-  TOTAL_EXTRA_JOKER = 0;
-  HAND_COUNT = 11;
+
 
   title = 'Canasta';
   board: BoardModel;
@@ -24,6 +22,7 @@ export class AppComponent implements OnInit {
   cardSuiteList: CardSuite[];
   actionList: string[];
   currentPlayer: Player;
+  lastDiscard: CardModel;
 
   action = {
     type: Action.DRAW,
@@ -33,18 +32,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.board = new BoardModel();
-    this.board.opponnent1Count = this.HAND_COUNT;
-    this.board.opponent2Count = this.HAND_COUNT;
-    this.board.partnerCount = this.HAND_COUNT;
-    this.board.sideDeck1Avaible = true;
-    this.board.sideDeck2Avaible = true;
-    this.board.myGame = new GameModel();
-    this.board.opponentsGame = new GameModel();
     this.board.selectedPlayer = 1;
-
-    var totalCardsOutsideDeck = this.HAND_COUNT * 5;
-    this.board.maindDeckCount = ((this.TOTAl_DECK_CARDS * 2) - totalCardsOutsideDeck) + this.TOTAL_EXTRA_JOKER;
-
     this.cardSuiteList = CardSuite.getAll();
     this.cardValueList = Cardvalue.getAll();
     this.actionList = Action.getAll();
@@ -68,12 +56,24 @@ export class AppComponent implements OnInit {
   }
 
   doAction(){
+    const cardAction = <CardModel>{ suite: this.action.suite, value: this.action.value  };
     if(this.action.type == Action.DRAW){
       if(this.currentPlayer == Player.ME){
-        this.board.myHand.push(<CardModel>{ suite: this.action.suite, value: this.action.value  });
-        this.board.maindDeckCount = this.board.maindDeckCount - 1;
+        this.board.drawCardForMe(cardAction);
+      }else{
+        this.board.drawCardOthers(this.currentPlayer);
       }
+    }else if(this.action.type == Action.DISCARD){
+      if(this.currentPlayer == Player.ME){
+        this.board.discardMe(cardAction);
+      }else{
+        this.board.discardOthers(this.currentPlayer, cardAction);
+      }
+      
+      this.lastDiscard = this.board.discardStack[this.board.discardStack.length - 1];
     }
+
+    $("#action").modal('hide');
   }
   
 }
