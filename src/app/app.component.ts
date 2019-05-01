@@ -8,6 +8,7 @@ import { Player } from './model/player/palyer.enum';
 import { Card } from './model/card';
 import { MePlayer } from './model/player/me-player';
 import { OtherPlayer } from './model/player/other-player';
+import { CardSelectionModel } from './card-selection/card-selection.model';
 declare var $: any;
 
 @Component({
@@ -16,6 +17,26 @@ declare var $: any;
 })
 export class AppComponent implements OnInit {
 
+  testeCardSelection = [
+    <CardSelectionModel>{
+      card: <Card>{
+        value: Cardvalue.ACE,
+        suite: CardSuite.SPADE
+      }
+    },
+    <CardSelectionModel>{
+      card: <Card>{
+        value: Cardvalue.TWO,
+        suite: CardSuite.SPADE
+      }
+    },
+    <CardSelectionModel>{
+      card: <Card>{
+        value: Cardvalue.THREE,
+        suite: CardSuite.SPADE
+      }
+    }
+  ];
 
   title = 'Canasta';
   board: Board;
