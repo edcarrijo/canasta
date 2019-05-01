@@ -4,11 +4,11 @@
     <div class="row justify-content-md-center">
       <div class="col">
           <button type="button" class="btn btn-light d-block" (click)="openOpponents1Choice()">Opponnent 1</button> 
-          <canasta-card-back [count]="board.opponnent1Count" ></canasta-card-back>
+          <canasta-card-back [count]="opponent1.handCount" ></canasta-card-back>
       </div>
       <div class="col-2">
           <button type="button" class="btn btn-light d-block" (click)="openPartnerChoice()">Partner</button> 
-          <canasta-card-back [count]="board.partnerCount"></canasta-card-back>
+          <canasta-card-back [count]="partner.handCount"></canasta-card-back>
       </div>
     </div>
     <div class="game-table">
@@ -16,9 +16,9 @@
           <div class="col">
               <p>Oponnent's table</p>
           </div>
-          <div class="col-1">
+          <div class="col-2">
               <p>Red threes</p>
-              <canasta-card *ngFor="let card of board.opponentsGame.redThrees" [card]="card"></canasta-card>
+              <canasta-card *ngFor="let card of opponentGame.redThrees" [card]="card"></canasta-card>
           </div>
       </div>
       <div class="row neutral-zone">
@@ -40,9 +40,9 @@
           <div class="col">
               <p>My table</p>
           </div>
-          <div class="col-1">
+          <div class="col-2">
               <p>Red threes</p>
-              <canasta-card *ngFor="let card of board.myGame.redThrees" [card]="card"></canasta-card>
+              <canasta-card *ngFor="let card of myGame.redThrees" [card]="card"></canasta-card>
           </div>
       </div>
     </div>
@@ -50,11 +50,11 @@
     <div class="row">
       <div class="col">
         <button type="button" class="btn btn-light d-block" (click)="openMyActionChoice()">Me</button> 
-        <canasta-card *ngFor="let card of board.myHand" [card]="card"></canasta-card>
+        <canasta-card *ngFor="let card of me.hand" [card]="card"></canasta-card>
       </div>
       <div class="col-2">
           <button type="button" class="btn btn-light d-block" (click)="openOpponents2Choice()">Opponnent 2</button> 
-          <canasta-card-back [count]="board.opponent2Count"></canasta-card-back>
+          <canasta-card-back [count]="opponent2.handCount"></canasta-card-back>
       </div>
     </div>
     </div>
@@ -94,8 +94,13 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="doAction()">Do action</button>
+        <button type="button" class="btn btn-primary" (click)="doActionAndClose()">Do action and close</button>
+        <button type="button" class="btn btn-secondary" (click)="doAction()">Do action</button>
       </div>
     </div>
   </div>
 </div>
+
+<pre hidden>
+  {{ board | json }}
+</pre>

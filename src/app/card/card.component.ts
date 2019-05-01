@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CardModel } from '../model/card.model';
-import { CardSuite } from '../model/card-suite.model';
-import { Cardvalue } from '../model/card-value.model';
+import { Card } from '../model/card';
+import { CardSuite } from '../model/card-suite';
+import { Cardvalue } from '../model/card-value';
 
 @Component({
   selector: 'canasta-card',
@@ -12,7 +12,7 @@ export class CardComponent implements OnInit {
 
   constructor() { }
 
-  @Input() card: CardModel;
+  @Input() card: Card;
 
   ngOnInit() {
     

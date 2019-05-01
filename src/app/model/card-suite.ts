@@ -43,7 +43,7 @@ export class CardSuite{
     public static SPADE = <CardSuite>{ 
         id: 'S',
         symbol: '♠',
-        styleClass: 'space',
+        styleClass: 'spade',
         imageFaces: [
             <ImageFace>{ value: 11, image: 'face-jack-spade.png'},
             <ImageFace>{ value: 12, image: 'face-queen-spade.png'},
