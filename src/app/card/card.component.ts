@@ -1,8 +1,5 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Card } from '../model/card';
-import { CardSuite } from '../model/card-suite';
-import { Cardvalue } from '../model/card-value';
-import { EventEmitter } from 'protractor';
 
 @Component({
   selector: 'canasta-card',
