@@ -16,28 +16,6 @@ declare var $: any;
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
-
-  testeCardSelection = [
-    <CardSelectionModel>{
-      card: <Card>{
-        value: Cardvalue.ACE,
-        suite: CardSuite.SPADE
-      }
-    },
-    <CardSelectionModel>{
-      card: <Card>{
-        value: Cardvalue.TWO,
-        suite: CardSuite.SPADE
-      }
-    },
-    <CardSelectionModel>{
-      card: <Card>{
-        value: Cardvalue.THREE,
-        suite: CardSuite.SPADE
-      }
-    }
-  ];
-
   title = 'Canasta';
   board: Board;
 
@@ -54,6 +32,8 @@ export class AppComponent implements OnInit {
 
   myGame: Game;
   opponentGame: Game;
+
+  myHandSelection: CardSelectionModel[] = [];
 
   action = {
     type: Action.DRAW,
@@ -78,6 +58,7 @@ export class AppComponent implements OnInit {
 
   openMyActionChoice(){
     this.currentPlayer = Player.ME;
+    this.setHandSelection();
     $("#action").modal();
   }
   openPartnerChoice(){
@@ -94,8 +75,8 @@ export class AppComponent implements OnInit {
   }
 
   doAction(){
-    const cardAction = <Card>{ suite: this.action.suite, value: this.action.value  };
-
+    var cardAction = this.getCardAction();
+   
     switch(this.action.type){
       case Action.DRAW:
         this.drawAction(cardAction);
@@ -110,11 +91,26 @@ export class AppComponent implements OnInit {
         this.drawDiscardAction();
         break;
     }
+
+    this.setHandSelection();
   }
 
   doActionAndClose(){
     this.doAction();
     $("#action").modal('hide');
+  }
+
+  private getCardAction(): Card{
+    var cardAction: Card;
+    if(this.mustShowMyHandAction()){
+      const selectionCard = this.myHandSelection.find(selection => selection.selected);
+      if(selectionCard)
+        cardAction = selectionCard.card;
+    }
+    else{
+      cardAction = <Card>{ suite: this.action.suite, value: this.action.value  };
+    }
+    return cardAction;
   }
 
   private drawAction(cardAction: Card) {
@@ -135,6 +131,9 @@ export class AppComponent implements OnInit {
   }
 
   private discardAction(cardAction: Card) {
+    if(!cardAction)
+      return;
+
     switch(this.currentPlayer){
       case Player.ME:
         this.me.discard(cardAction);
@@ -154,6 +153,9 @@ export class AppComponent implements OnInit {
   }
 
   private addRedThreeAction(cardAction: Card){
+    if(!cardAction)
+      return;
+
     switch(this.currentPlayer){
       case Player.ME:
         this.me.addRedThree(cardAction);
@@ -187,5 +189,22 @@ export class AppComponent implements OnInit {
     }
 
     this.lastDiscard = null;
+  }
+
+  private setHandSelection(){
+    if(this.currentPlayer == Player.ME){
+      this.myHandSelection = this.me.hand.map(card => <CardSelectionModel>{ selected: false, card: card });
+    }
+  }
+
+  mustShowMyHandAction():boolean{
+    return (this.action.type == Action.SEQUENCE 
+        || this.action.type == Action.DISCARD 
+        || this.action.type == Action.ADD_RED_THREE)
+        && this.currentPlayer == Player.ME;
+  }
+
+  isCardSelectionNeeded():boolean{
+    return this.action.type != Action.DRAW_DISCARD;
   }
 }

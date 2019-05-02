@@ -1,4 +1,4 @@
-<div class="card" (click)="cardClick()">
+<div class="card">
   <div [ngClass]="card.value.styleClass + ' ' + card.suite.styleClass">
       <div class="corner top">
           <span class="number">{{ card.value.label }}</span>
@@ -34,3 +34,5 @@
       </div>
   </div>
 </div>
+
+{{ selected }}

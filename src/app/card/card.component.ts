@@ -11,7 +11,6 @@ export class CardComponent implements OnInit {
   constructor() { }
 
   @Input() card: Card;
-  @Output() click = new EventEmitter();
 
   ngOnInit() {
     
@@ -22,10 +21,6 @@ export class CardComponent implements OnInit {
       const image = this.card.suite.imageFaces.find(face => face.value == this.card.value.importance).image;;
       return 'assets/img/faces/' + image;
     }
-  }
-
-  cardClick(){
-    this.click.emit("click");
   }
 
 }

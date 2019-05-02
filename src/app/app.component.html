@@ -77,7 +77,7 @@
                 <option *ngFor="let action of actionList" [value]="action">{{action}}</option>
               </select>
           </div>
-          <div class="form-group row">
+          <div class="form-group row" *ngIf="isCardSelectionNeeded() && !mustShowMyHandAction()">
             <div class="col">
                 <label for="suite-select" class="form-label">Suite:</label>
                 <select class="form-control" id="suite-select" name="suite-select" [(ngModel)]="action.suite">
@@ -91,6 +91,11 @@
                   </select>
             </div>
           </div>
+          <div class="row" *ngIf="isCardSelectionNeeded() && mustShowMyHandAction() ">
+            <div class="col">
+              <canasta-card-selection [source]="myHandSelection"></canasta-card-selection>
+            </div>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -100,8 +105,6 @@
     </div>
   </div>
 </div>
-
-<canasta-card-selection [source]="testeCardSelection"></canasta-card-selection>
 
 <pre hidden>
   {{ board | json }}

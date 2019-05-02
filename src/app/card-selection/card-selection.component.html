@@ -2,4 +2,5 @@
 <canasta-card *ngFor="let sourceIem of source; let i = index" 
   [card]="sourceIem.card"
   (click)="selectCard(i)"
-  [ngClass]="{ 'selected' : sourceIem.selected }"></canasta-card>
+  [ngClass]="{ 'selected': sourceIem.selected }" 
+  class="selection"></canasta-card>
