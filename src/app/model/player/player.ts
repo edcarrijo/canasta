@@ -18,4 +18,5 @@ export abstract class Player{
     abstract discard(card: Card);
     abstract addRedThree(card: Card);
     abstract drawDiscard();
+    abstract addSequence(cardList: Card[]);
 }

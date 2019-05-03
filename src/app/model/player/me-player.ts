@@ -2,9 +2,12 @@ import { Player } from './player';
 import { Card } from '../card';
 import { Board } from '../board';
 import { Game } from '../game';
+import { Injectable, Inject } from '@angular/core';
 
+@Injectable()
 export class MePlayer extends Player{
-    constructor(board: Board, game: Game){
+
+    constructor(board: Board, @Inject('myGame') game: Game){
         super(board, game);
     }
 
@@ -26,16 +29,31 @@ export class MePlayer extends Player{
     }
 
     private removeCardFromMyHand(card: Card): Card{
-        var myHandCard = this.hand
-            .find(c => c.value.importance == card.value.importance 
-                    && c.suite.id == card.suite.id);
-        if(!myHandCard)
-            throw new Error('Card not found');
+        var myHandCard = this.findCardInMyHand(card);
 
         const myHandCardIndex = this.hand.indexOf(myHandCard);
         this.hand.splice(myHandCardIndex,1);
         return myHandCard;
     }
 
-    
+    private findCardInMyHand(card: Card) {
+        var myHandCard = this.hand
+            .find(c => c.value.importance == card.value.importance
+                && c.suite.id == card.suite.id);
+        if (!myHandCard)
+            throw new Error('Card not found');
+        return myHandCard;
+    }
+
+    addSequence(cardList: Card[]) {
+        this.validateSequence(cardList);
+        this._game.addSequence(cardList);
+        cardList.forEach(card => this.removeCardFromMyHand(card));
+    }
+
+    private validateSequence(cardList: Card[]) {
+        if (!cardList.length)
+            throw new Error('Sequence empty');
+        cardList.forEach(card => this.findCardInMyHand(card));
+    }
 }

@@ -13,12 +13,13 @@
     </div>
     <div class="game-table">
       <div class="row">
-          <div class="col">
-              <p>Oponnent's table</p>
-          </div>
           <div class="col-2">
               <p>Red threes</p>
               <canasta-card *ngFor="let card of opponentGame.redThrees" [card]="card"></canasta-card>
+          </div>
+          <div class="col">
+              <p>Oponnent's table</p>
+              <canasta-card-sequence *ngFor="let sequence of opponentGame.sequences" [sequence]="sequence"></canasta-card-sequence>
           </div>
       </div>
       <div class="row neutral-zone">
@@ -37,12 +38,13 @@
           </div>
       </div>
       <div class="row">
-          <div class="col">
-              <p>My table</p>
-          </div>
           <div class="col-2">
               <p>Red threes</p>
               <canasta-card *ngFor="let card of myGame.redThrees" [card]="card"></canasta-card>
+          </div>
+          <div class="col">
+              <p>My table</p>
+              <canasta-card-sequence *ngFor="let sequence of myGame.sequences" [sequence]="sequence"></canasta-card-sequence>
           </div>
       </div>
     </div>

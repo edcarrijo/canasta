@@ -3,8 +3,7 @@ import { CardSelectionModel } from './card-selection.model';
 
 @Component({
   selector: 'canasta-card-selection',
-  templateUrl: './card-selection.component.html',
-  styleUrls: ['./card-selection.component.less']
+  templateUrl: './card-selection.component.html'
 })
 export class CardSelectionComponent implements OnInit {
 

@@ -2,7 +2,9 @@ import { Card } from './card';
 import { Game } from './game';
 import { Player } from './player/palyer.enum';
 import { CardSuite } from './card-suite';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class Board{
     TOTAl_DECK_CARDS = 52;
     TOTAL_EXTRA_JOKER = 0;

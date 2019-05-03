@@ -29,4 +29,8 @@ export class OtherPlayer extends Player{
         this.handCount += this._board.discardStack.length;
         this._board.discardStack = [];
     }
+
+    addSequence(cardList: Card[]) {
+        this._game.addSequence(cardList);
+    }
 }

@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Board } from './model/board';
 import { Game } from './model/game';
 import { Cardvalue } from './model/card-value';
 import { CardSuite } from './model/card-suite';
 import { Action } from './model/action';
-import { Player } from './model/player/palyer.enum';
+import { Player as PlayerEnum } from './model/player/palyer.enum';
 import { Card } from './model/card';
-import { MePlayer } from './model/player/me-player';
-import { OtherPlayer } from './model/player/other-player';
 import { CardSelectionModel } from './card-selection/card-selection.model';
+import { MePlayer } from './model/player/me-player';
+import { Player } from './model/player/player';
 declare var $: any;
 
 @Component({
@@ -17,21 +17,12 @@ declare var $: any;
 })
 export class AppComponent implements OnInit {
   title = 'Canasta';
-  board: Board;
 
   cardValueList: Cardvalue[];
   cardSuiteList: CardSuite[];
   actionList: string[];
-  currentPlayer: Player;
+  currentPlayer: PlayerEnum;
   lastDiscard: Card;
-
-  me: MePlayer;
-  partner: OtherPlayer;
-  opponent1: OtherPlayer;
-  opponent2: OtherPlayer;
-
-  myGame: Game;
-  opponentGame: Game;
 
   myHandSelection: CardSelectionModel[] = [];
 
@@ -41,58 +32,36 @@ export class AppComponent implements OnInit {
     suite: CardSuite.DIAMOND
   };
 
+  constructor(protected board: Board, 
+    protected me: MePlayer,
+    @Inject('myGame') protected myGame: Game,
+    @Inject('opponentGame') protected opponentGame: Game,
+    @Inject('partner') protected partner: Player,
+    @Inject('opponent1') protected opponent1: Player,
+    @Inject('opponent2') protected opponent2: Player){ }
+
   ngOnInit() {
-    this.board = new Board();
-    this.myGame = new Game();
-    this.me = new MePlayer(this.board, this.myGame);
-    this.partner = new OtherPlayer(this.board, this.myGame);
-
-    this.opponentGame = new Game();
-    this.opponent1 = new OtherPlayer(this.board, this.opponentGame);
-    this.opponent2 = new OtherPlayer(this.board, this.opponentGame);
-
     this.cardSuiteList = CardSuite.getAll();
     this.cardValueList = Cardvalue.getAll();
     this.actionList = Action.getAll();
   }
 
   openMyActionChoice(){
-    this.currentPlayer = Player.ME;
+    this.currentPlayer = PlayerEnum.ME;
     this.setHandSelection();
     $("#action").modal();
   }
   openPartnerChoice(){
-    this.currentPlayer = Player.PARTNER;
+    this.currentPlayer = PlayerEnum.PARTNER;
     $("#action").modal();
   }
   openOpponents1Choice(){
-    this.currentPlayer = Player.OPPONENT1;
+    this.currentPlayer = PlayerEnum.OPPONENT1;
     $("#action").modal();
   }
   openOpponents2Choice(){
-    this.currentPlayer = Player.OPPONENT2;
+    this.currentPlayer = PlayerEnum.OPPONENT2;
     $("#action").modal();
-  }
-
-  doAction(){
-    var cardAction = this.getCardAction();
-   
-    switch(this.action.type){
-      case Action.DRAW:
-        this.drawAction(cardAction);
-        break;
-      case Action.DISCARD:
-        this.discardAction(cardAction);
-        break;
-      case Action.ADD_RED_THREE:
-        this.addRedThreeAction(cardAction);
-        break;
-      case Action.DRAW_DISCARD:
-        this.drawDiscardAction();
-        break;
-    }
-
-    this.setHandSelection();
   }
 
   doActionAndClose(){
@@ -100,31 +69,63 @@ export class AppComponent implements OnInit {
     $("#action").modal('hide');
   }
 
-  private getCardAction(): Card{
-    var cardAction: Card;
+  doAction(){
+    var cardActionList = this.getCardActionList();
+   
+    switch(this.action.type){
+      case Action.DRAW:
+        this.drawAction(this.getFirstSelectedCard(cardActionList));
+        break;
+      case Action.DISCARD:
+        this.discardAction(this.getFirstSelectedCard(cardActionList));
+        break;
+      case Action.ADD_RED_THREE:
+        this.addRedThreeAction(this.getFirstSelectedCard(cardActionList));
+        break;
+      case Action.DRAW_DISCARD:
+        this.drawDiscardAction();
+        break;
+      case Action.SEQUENCE:
+        this.beginSequenceAction(cardActionList);
+        break;
+      
+    }
+
+    this.setHandSelection();
+  }
+
+
+  private getCardActionList(): Card[]{
+    var cardAction: Card[];
     if(this.mustShowMyHandAction()){
-      const selectionCard = this.myHandSelection.find(selection => selection.selected);
-      if(selectionCard)
-        cardAction = selectionCard.card;
+      const selectionCardList = this.myHandSelection.filter(selection => selection.selected);
+      cardAction = selectionCardList.map(selection => selection.card);
     }
     else{
-      cardAction = <Card>{ suite: this.action.suite, value: this.action.value  };
+      cardAction = [<Card>{ suite: this.action.suite, value: this.action.value  }];
     }
     return cardAction;
   }
 
+  private getFirstSelectedCard(cardSelectionList: Card[]):Card{
+    if(cardSelectionList.length)
+      return cardSelectionList[0];
+    else
+      return null;
+  }
+
   private drawAction(cardAction: Card) {
     switch(this.currentPlayer){
-      case Player.ME:
+      case PlayerEnum.ME:
         this.me.drawCard(cardAction);
         break;
-      case Player.OPPONENT1:
+      case PlayerEnum.OPPONENT1:
         this.opponent1.drawCard(cardAction);
         break;
-      case Player.PARTNER:
+      case PlayerEnum.PARTNER:
         this.partner.drawCard(cardAction);
         break;
-      case Player.OPPONENT2:
+      case PlayerEnum.OPPONENT2:
         this.opponent2.drawCard(cardAction);
         break;
     }
@@ -135,16 +136,16 @@ export class AppComponent implements OnInit {
       return;
 
     switch(this.currentPlayer){
-      case Player.ME:
+      case PlayerEnum.ME:
         this.me.discard(cardAction);
         break;
-      case Player.OPPONENT1:
+      case PlayerEnum.OPPONENT1:
         this.opponent1.discard(cardAction);
         break;
-      case Player.PARTNER:
+      case PlayerEnum.PARTNER:
         this.partner.discard(cardAction);
         break;
-      case Player.OPPONENT2:
+      case PlayerEnum.OPPONENT2:
         this.opponent2.discard(cardAction);
         break;
     }
@@ -157,16 +158,16 @@ export class AppComponent implements OnInit {
       return;
 
     switch(this.currentPlayer){
-      case Player.ME:
+      case PlayerEnum.ME:
         this.me.addRedThree(cardAction);
         break;
-      case Player.OPPONENT1:
+      case PlayerEnum.OPPONENT1:
         this.opponent1.addRedThree(cardAction);
         break;
-      case Player.PARTNER:
+      case PlayerEnum.PARTNER:
         this.partner.addRedThree(cardAction);
         break;
-      case Player.OPPONENT2:
+      case PlayerEnum.OPPONENT2:
         this.opponent2.addRedThree(cardAction);
         break;
     }
@@ -174,16 +175,16 @@ export class AppComponent implements OnInit {
 
   private drawDiscardAction(){
     switch(this.currentPlayer){
-      case Player.ME:
+      case PlayerEnum.ME:
         this.me.drawDiscard();
         break;
-      case Player.OPPONENT1:
+      case PlayerEnum.OPPONENT1:
         this.opponent1.drawDiscard();
         break;
-      case Player.PARTNER:
+      case PlayerEnum.PARTNER:
         this.partner.drawDiscard();
         break;
-      case Player.OPPONENT2:
+      case PlayerEnum.OPPONENT2:
         this.opponent2.drawDiscard();
         break;
     }
@@ -192,7 +193,7 @@ export class AppComponent implements OnInit {
   }
 
   private setHandSelection(){
-    if(this.currentPlayer == Player.ME){
+    if(this.currentPlayer == PlayerEnum.ME){
       this.myHandSelection = this.me.hand.map(card => <CardSelectionModel>{ selected: false, card: card });
     }
   }
@@ -201,10 +202,27 @@ export class AppComponent implements OnInit {
     return (this.action.type == Action.SEQUENCE 
         || this.action.type == Action.DISCARD 
         || this.action.type == Action.ADD_RED_THREE)
-        && this.currentPlayer == Player.ME;
+        && this.currentPlayer == PlayerEnum.ME;
   }
 
   isCardSelectionNeeded():boolean{
     return this.action.type != Action.DRAW_DISCARD;
+  }
+
+  private beginSequenceAction(cardActionList: Card[]){
+    switch(this.currentPlayer){
+      case PlayerEnum.ME:
+        this.me.addSequence(cardActionList);
+        break;
+      case PlayerEnum.OPPONENT1:
+        this.opponent1.addSequence(cardActionList);
+        break;
+      case PlayerEnum.PARTNER:
+        this.partner.addSequence(cardActionList);
+        break;
+      case PlayerEnum.OPPONENT2:
+        this.opponent2.addSequence(cardActionList);
+        break;
+    }
   }
 }
