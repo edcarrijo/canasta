@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Card } from '../model/card';
+import { Card } from '../model';
 
 @Component({
   selector: 'canasta-card',

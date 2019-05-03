@@ -1,5 +1,5 @@
-import { CardSuite } from './card-suite';
-import { Cardvalue } from './card-value';
+import { CardSuite, Cardvalue } from '.';
+
 
 export class Card{
     public suite: CardSuite;

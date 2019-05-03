@@ -11,6 +11,7 @@ import { Board } from './model/board';
 import { Game } from './model/game';
 import { MePlayer } from './model/player/me-player';
 import { OtherPlayer } from './model/player/other-player';
+import { PlayerActionComponent } from './player-action/player-action.component';
 
 let playerFactory = (board: Board, game: Game) => {
   return new OtherPlayer(board, game);
@@ -23,7 +24,8 @@ let playerFactory = (board: Board, game: Game) => {
     CardComponent,
     CardBackComponent,
     CardSelectionComponent,
-    CardSequenceComponent
+    CardSequenceComponent,
+    PlayerActionComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Card } from '../model/card';
 import { Sequence } from '../model/game';
 
 @Component({

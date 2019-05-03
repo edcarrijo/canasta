@@ -10,6 +10,10 @@ export class OtherPlayer extends Player{
         this.handCount = board.HAND_COUNT;
     }
 
+    getMustShowHandAction(): boolean {
+        return false;
+    }
+
     drawCard(card: Card) {
         this.handCount++;
         this._board.maindDeckCount--;

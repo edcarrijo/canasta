@@ -10,6 +10,10 @@ export class MePlayer extends Player{
     constructor(board: Board, @Inject('myGame') game: Game){
         super(board, game);
     }
+    
+    getMustShowHandAction(): boolean {
+        return true;
+    }
 
     drawCard(card: Card) {
         this.hand.push(card);

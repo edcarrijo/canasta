@@ -1,6 +1,7 @@
+
+import { Injectable } from '@angular/core';
 import { Card } from './card';
 import { CardSuite } from './card-suite';
-import { Injectable } from '@angular/core';
 
 @Injectable()
 export class Game{

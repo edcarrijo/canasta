@@ -14,6 +14,7 @@ export abstract class Player{
         this.hand = [];
     }
 
+    abstract getMustShowHandAction(): boolean;
     abstract drawCard(card: Card);
     abstract discard(card: Card);
     abstract addRedThree(card: Card);
