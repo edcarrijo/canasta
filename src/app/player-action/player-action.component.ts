@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Player, Action, Cardvalue, CardSuit, Card } from '../model';
+import { Player, Action, CardValue, CardSuit, Card } from '../model';
 import { CardSelectionModel } from '../card-selection/card-selection.model';
 declare var $: any;
 
@@ -13,21 +13,21 @@ export class PlayerActionComponent implements OnInit {
   @Input() modalId: string;
   @Output() actionDone = new EventEmitter<string>();
 
-  cardValueList: Cardvalue[];
+  cardValueList: CardValue[];
   cardSuitList: CardSuit[];
   actionList: string[];
   handSelection: CardSelectionModel[] = [];
   
   currentAction = {
     type: Action.DRAW,
-    value: Cardvalue.ACE,
+    value: CardValue.ACE,
     suit: CardSuit.DIAMOND
   };
   constructor() { }
 
   ngOnInit() {
     this.cardSuitList = CardSuit.getAll();
-    this.cardValueList = Cardvalue.getAll();
+    this.cardValueList = CardValue.getAll();
     this.actionList = Action.getAll();
   }
 

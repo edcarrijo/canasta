@@ -16,7 +16,7 @@
                   <option *ngFor="let action of actionList" [value]="action">{{action}}</option>
                 </select>
             </div>
-            <div class="form-group row" *ngIf="isCardSelectionNeeded() && !mustShowMyHandAction()">
+            <div class="form-group row" *ngIf="isCardSelectionNeeded() && !mustShowMyHandAction()" id="newCardSelectionSection">
               <div class="col">
                   <label for="suit-select" class="form-label">suit:</label>
                   <select class="form-control" id="suit-select" name="suit-select" [(ngModel)]="currentAction.suit">
@@ -30,7 +30,7 @@
                     </select>
               </div>
             </div>
-            <div class="row" *ngIf="isCardSelectionNeeded() && mustShowMyHandAction() ">
+            <div class="row" *ngIf="isCardSelectionNeeded() && mustShowMyHandAction()" id="handCardSelectionSection">
               <div class="col">
                 <canasta-card-selection [source]="handSelection"></canasta-card-selection>
               </div>
@@ -39,8 +39,8 @@
           
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="doActionAndClose()">Do action and close</button>
-          <button type="button" class="btn btn-secondary" (click)="doAction()">Do action</button>
+          <button type="button" id="do-action-and-close-button" class="btn btn-primary" (click)="doActionAndClose()">Do action and close</button>
+          <button type="button" id="do-action-button" class="btn btn-secondary" (click)="doAction()">Do action</button>
         </div>
       </div>
     </div>

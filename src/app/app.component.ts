@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { Board } from './model/board';
 import { Game } from './model/game';
-import { Cardvalue } from './model/card-value';
+import { CardValue } from './model/card-value';
 import { CardSuit } from './model/card-suit';
 import { Action } from './model/action';
 import { Player as PlayerEnum } from './model/player/palyer.enum';

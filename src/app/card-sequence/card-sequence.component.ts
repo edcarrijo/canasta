@@ -8,7 +8,7 @@ import { Sequence } from '../model/game';
 export class CardSequenceComponent implements OnInit {
 
   constructor() { }
-  @Input() sequence: Sequence[];
+  @Input() sequence: Sequence;
 
   ngOnInit() {
   }

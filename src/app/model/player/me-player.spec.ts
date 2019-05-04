@@ -2,13 +2,13 @@ import { MePlayer } from "./me-player";
 import { Board } from '../board';
 import { Game } from '../game';
 import { Card } from '../card';
-import { Cardvalue } from '../card-value';
+import { CardValue } from '../card-value';
 import { CardSuit } from '../card-suit';
 
 describe('MePlayer draw a card', () => {
     let me: MePlayer;
     let board: Board;
-    let cardAction =  <Card>{ value: Cardvalue.ACE, suit: CardSuit.SPADE }
+    let cardAction =  <Card>{ value: CardValue.ACE, suit: CardSuit.SPADE }
     let initialMaindDeckCount: number;
 
     beforeEach(() => {
@@ -38,18 +38,18 @@ describe('MePlayer discard a card', () => {
         let game = new Game();
         me = new MePlayer(board, game);
         me.hand = [
-            <Card>{ value: Cardvalue.ACE, suit: CardSuit.SPADE },
-            <Card>{ value: Cardvalue.TWO, suit: CardSuit.HEART }
+            <Card>{ value: CardValue.ACE, suit: CardSuit.SPADE },
+            <Card>{ value: CardValue.TWO, suit: CardSuit.HEART }
         ];
     });
 
     it('should throw an error if selected card is not in my hand', () => {
-        expect(() => me.discard(<Card>{ value: Cardvalue.TWO, suit: CardSuit.SPADE }))
+        expect(() => me.discard(<Card>{ value: CardValue.TWO, suit: CardSuit.SPADE }))
         .toThrow();
     });
 
     it('should remove selected card from my hand', () => {
-        let cardToRemove = <Card>{ value: Cardvalue.TWO, suit: CardSuit.HEART }; 
+        let cardToRemove = <Card>{ value: CardValue.TWO, suit: CardSuit.HEART }; 
         me.discard(cardToRemove);
         expect(me.hand.some(card => card.value.importance == cardToRemove.value.importance 
             && card.suit.id == cardToRemove.suit.id))
@@ -57,7 +57,7 @@ describe('MePlayer discard a card', () => {
     });
 
     it('should  put selected card in the discard', () => {
-        let cardToRemove = <Card>{ value: Cardvalue.TWO, suit: CardSuit.HEART }; 
+        let cardToRemove = <Card>{ value: CardValue.TWO, suit: CardSuit.HEART }; 
         me.discard(cardToRemove);
         expect(board.discardStack.some(card => card.value.importance == cardToRemove.value.importance 
             && card.suit.id == cardToRemove.suit.id))
