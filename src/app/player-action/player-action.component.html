@@ -18,9 +18,9 @@
             </div>
             <div class="form-group row" *ngIf="isCardSelectionNeeded() && !mustShowMyHandAction()">
               <div class="col">
-                  <label for="suite-select" class="form-label">Suite:</label>
-                  <select class="form-control" id="suite-select" name="suite-select" [(ngModel)]="currentAction.suite">
-                    <option *ngFor="let suite of cardSuiteList" [ngValue]="suite">{{suite.symbol}}</option>
+                  <label for="suit-select" class="form-label">suit:</label>
+                  <select class="form-control" id="suit-select" name="suit-select" [(ngModel)]="currentAction.suit">
+                    <option *ngFor="let suit of cardsuitList" [ngValue]="suit">{{suit.symbol}}</option>
                   </select>
               </div>
               <div class="col">

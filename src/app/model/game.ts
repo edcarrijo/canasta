@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { Card } from './card';
-import { CardSuite } from './card-suite';
+import { CardSuit } from './card-suit';
 
 @Injectable()
 export class Game{
@@ -21,7 +21,7 @@ export class Game{
     }
 
     private isRedThree(card: Card){
-        return card.value.importance == 3 && (card.suite.id == CardSuite.HEART.id || card.suite.id == CardSuite.DIAMOND.id);
+        return card.value.importance == 3 && (card.suit.id == CardSuit.HEART.id || card.suit.id == CardSuit.DIAMOND.id);
     }
 
     addSequence(cardList: Card[]){

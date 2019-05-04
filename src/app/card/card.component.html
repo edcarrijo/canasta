@@ -1,36 +1,36 @@
 <div class="card">
-  <div [ngClass]="card.value.styleClass + ' ' + card.suite.styleClass">
+  <div [ngClass]="card.value.styleClass + ' ' + card.suit.styleClass">
       <div class="corner top">
           <span class="number">{{ card.value.label }}</span>
-          <span>{{ card.suite.symbol }}</span>
+          <span class="suit-corner">{{ card.suit.symbol }}</span>
       </div>
       
       <span *ngIf="card.value.importance > 10" class="face middle_center">
           <img [src]="getImagePath()">
       </span>
-<div *ngIf="card.value.importance <= 10">
-  <span class="suit top_left">{{ card.suite.symbol }}</span>
-  <span class="suit top_right">{{ card.suite.symbol }}</span>
-  <span class="suit top_center">{{ card.suite.symbol }}</span>
-  <span class="suit middle_left">{{ card.suite.symbol }}</span>
-  <span class="suit middle_right">{{ card.suite.symbol }}</span>
-  <span class="suit middle_top_left">{{ card.suite.symbol }}</span>
-  <span class="suit middle_top_center">{{ card.suite.symbol }}</span>
-  <span class="suit middle_top_right">{{ card.suite.symbol }}</span>
-  <span class="suit middle_center">{{ card.suite.symbol }}</span>
-  <span class="suit bottom_left">{{ card.suite.symbol }}</span>
-  <span class="suit bottom_right">{{ card.suite.symbol }}</span>
-  <span class="suit bottom_center">{{ card.suite.symbol }}</span>
-  <span class="suit middle_bottom_center">{{ card.suite.symbol }}</span>
-  <span class="suit middle_bottom_left">{{ card.suite.symbol }}</span>
-  <span class="suit middle_bottom_right">{{ card.suite.symbol }}</span>
-  <span class="suit middle_center">{{ card.suite.symbol }}</span>
-</div>
+      <div *ngIf="card.value.importance <= 10">
+        <span class="suit top_left">{{ card.suit.symbol }}</span>
+        <span class="suit top_right">{{ card.suit.symbol }}</span>
+        <span class="suit top_center">{{ card.suit.symbol }}</span>
+        <span class="suit middle_left">{{ card.suit.symbol }}</span>
+        <span class="suit middle_right">{{ card.suit.symbol }}</span>
+        <span class="suit middle_top_left">{{ card.suit.symbol }}</span>
+        <span class="suit middle_top_center">{{ card.suit.symbol }}</span>
+        <span class="suit middle_top_right">{{ card.suit.symbol }}</span>
+        <span class="suit middle_center">{{ card.suit.symbol }}</span>
+        <span class="suit bottom_left">{{ card.suit.symbol }}</span>
+        <span class="suit bottom_right">{{ card.suit.symbol }}</span>
+        <span class="suit bottom_center">{{ card.suit.symbol }}</span>
+        <span class="suit middle_bottom_center">{{ card.suit.symbol }}</span>
+        <span class="suit middle_bottom_left">{{ card.suit.symbol }}</span>
+        <span class="suit middle_bottom_right">{{ card.suit.symbol }}</span>
+        <span class="suit middle_center">{{ card.suit.symbol }}</span>
+      </div>
   
 
       <div class="corner bottom">
           <span class="number">{{ card.value.label }}</span>
-          <span>{{ card.suite.symbol }}</span>
+          <span class="suit-corner">{{ card.suit.symbol }}</span>
       </div>
   </div>
 </div>

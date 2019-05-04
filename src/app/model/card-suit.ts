@@ -1,5 +1,5 @@
 
-export class CardSuite{
+export class CardSuit{
     public id: string;
     public symbol: string;
     public styleClass: string;
@@ -7,7 +7,7 @@ export class CardSuite{
 
     protected constructor(){ }
 
-    public static DIAMOND = <CardSuite>{ 
+    public static DIAMOND = <CardSuit>{ 
         id: 'D',
         symbol: '♦',
         styleClass: 'diamond',
@@ -18,7 +18,7 @@ export class CardSuite{
         ]
     }
 
-    public static CLUB = <CardSuite>{ 
+    public static CLUB = <CardSuit>{ 
         id: 'C',
         symbol: '♣',
         styleClass: 'club',
@@ -29,7 +29,7 @@ export class CardSuite{
         ]
     }
 
-    public static HEART = <CardSuite>{ 
+    public static HEART = <CardSuit>{ 
         id: 'H',
         symbol: '♥',
         styleClass: 'heart',
@@ -40,7 +40,7 @@ export class CardSuite{
         ]
     }
 
-    public static SPADE = <CardSuite>{ 
+    public static SPADE = <CardSuit>{ 
         id: 'S',
         symbol: '♠',
         styleClass: 'spade',
@@ -51,7 +51,7 @@ export class CardSuite{
         ]
     }
 
-    static getAll(): CardSuite[]{
+    static getAll(): CardSuit[]{
         return [this.DIAMOND, this.CLUB, this.HEART, this.SPADE];
     }
 }

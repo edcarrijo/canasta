@@ -29,21 +29,4 @@ describe('PlayerActionComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should open modal', () => {
-    let board = new Board();
-    let game = new Game();
-    let player = new OtherPlayer(board, game);
-    component.modalId = 'idModal';
-    component.player = player;
-    component.open();
-
-    setTimeout(() => {
-      const modalDe = fixture.debugElement.query(By.css('.modal'));
-      const modal: HTMLElement = modalDe.nativeElement;
-      expect(modal.style.display).toContain('block');
-    }, 100);
-    
-  });
-
 });

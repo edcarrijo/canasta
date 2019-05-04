@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { Board } from './model/board';
 import { Game } from './model/game';
 import { Cardvalue } from './model/card-value';
-import { CardSuite } from './model/card-suite';
+import { CardSuit } from './model/card-suit';
 import { Action } from './model/action';
 import { Player as PlayerEnum } from './model/player/palyer.enum';
 import { Card } from './model/card';
@@ -19,17 +19,9 @@ declare var $: any;
 export class AppComponent implements OnInit {
   title = 'Canasta';
 
-  cardValueList: Cardvalue[];
-  cardSuiteList: CardSuite[];
-  actionList: string[];
   lastDiscard: Card;
   myHandSelection: CardSelectionModel[] = [];
 
-  action = {
-    type: Action.DRAW,
-    value: Cardvalue.ACE,
-    suite: CardSuite.DIAMOND
-  };
 
   constructor(protected board: Board, 
     protected me: MePlayer,
@@ -40,9 +32,6 @@ export class AppComponent implements OnInit {
     @Inject('opponent2') protected opponent2: Player){ }
 
   ngOnInit() {
-    this.cardSuiteList = CardSuite.getAll();
-    this.cardValueList = Cardvalue.getAll();
-    this.actionList = Action.getAll();
   }
 
   actionDone(action: string){
@@ -51,10 +40,4 @@ export class AppComponent implements OnInit {
     if(action == Action.DRAW_DISCARD)
       this.lastDiscard = null;
   }
-
-
-
-
-  
-
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Player, Action, Cardvalue, CardSuite, Card } from '../model';
+import { Player, Action, Cardvalue, CardSuit, Card } from '../model';
 import { CardSelectionModel } from '../card-selection/card-selection.model';
 declare var $: any;
 
@@ -14,19 +14,19 @@ export class PlayerActionComponent implements OnInit {
   @Output() actionDone = new EventEmitter<string>();
 
   cardValueList: Cardvalue[];
-  cardSuiteList: CardSuite[];
+  cardSuitList: CardSuit[];
   actionList: string[];
   handSelection: CardSelectionModel[] = [];
   
   currentAction = {
     type: Action.DRAW,
     value: Cardvalue.ACE,
-    suite: CardSuite.DIAMOND
+    suit: CardSuit.DIAMOND
   };
   constructor() { }
 
   ngOnInit() {
-    this.cardSuiteList = CardSuite.getAll();
+    this.cardSuitList = CardSuit.getAll();
     this.cardValueList = Cardvalue.getAll();
     this.actionList = Action.getAll();
   }
@@ -78,7 +78,7 @@ export class PlayerActionComponent implements OnInit {
       cardAction = selectionCardList.map(selection => selection.card);
     }
     else{
-      cardAction = [<Card>{ suite: this.currentAction.suite, value: this.currentAction.value  }];
+      cardAction = [<Card>{ suit: this.currentAction.suit, value: this.currentAction.value  }];
     }
     return cardAction;
   }

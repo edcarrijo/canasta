@@ -10,7 +10,7 @@ export class MePlayer extends Player{
     constructor(board: Board, @Inject('myGame') game: Game){
         super(board, game);
     }
-    
+
     getMustShowHandAction(): boolean {
         return true;
     }
@@ -43,7 +43,7 @@ export class MePlayer extends Player{
     private findCardInMyHand(card: Card) {
         var myHandCard = this.hand
             .find(c => c.value.importance == card.value.importance
-                && c.suite.id == card.suite.id);
+                && c.suit.id == card.suit.id);
         if (!myHandCard)
             throw new Error('Card not found');
         return myHandCard;

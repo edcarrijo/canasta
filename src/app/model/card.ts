@@ -1,8 +1,8 @@
-import { CardSuite, Cardvalue } from '.';
+import { CardSuit, Cardvalue } from '.';
 
 
 export class Card{
-    public suite: CardSuite;
+    public suit: CardSuit;
     public value: Cardvalue;
     v: Cardvalue;
 }
