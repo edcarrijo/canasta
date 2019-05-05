@@ -5,6 +5,7 @@ import { Board, Game, Player, Card, CardValue, CardSuit, Action } from '../model
 import { FormsModule } from '@angular/forms';
 import { CardSelectionComponent } from '../card-selection/card-selection.component';
 import { CardComponent } from '../card/card.component';
+import { By } from '@angular/platform-browser';
 
 
 describe('PlayerActionComponent with card hand selection', () => {
@@ -61,40 +62,50 @@ describe('PlayerActionComponent with card hand selection', () => {
   });
 
   it('should display card selection for draw action', () => {
-    const actionSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#type-action');
-    actionSelect.value = Action.DISCARD;
-    actionSelect.dispatchEvent(new Event('change'));
-    fixture.detectChanges();
+  
+    fixture.whenStable().then(() => {
 
-    const newCardSelectionSection: HTMLDivElement = fixture.nativeElement.querySelector('#newCardSelectionSection');
-    expect(newCardSelectionSection).toBeDefined();
+      const actionSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#type-action');
+      actionSelect.value = Action.DRAW;
+      actionSelect.dispatchEvent(new Event('change'));
+      
+      fixture.detectChanges();
 
-    const handCardSelectionSection: HTMLDivElement = fixture.nativeElement.querySelector('#handCardSelectionSection');
-    expect(handCardSelectionSection).toBeNull();
+      expect(component.currentAction.type).toEqual(Action.DRAW);
+
+      const newCardSelectionSection: HTMLDivElement = fixture.nativeElement.querySelector('#newCardSelectionSection');
+      expect(newCardSelectionSection).toBeDefined();
+  
+      const handCardSelectionSection: HTMLDivElement = fixture.nativeElement.querySelector('#handCardSelectionSection');
+      expect(handCardSelectionSection).toBeNull('hand selection should not be shown');
+    });
+
+   
   });
 
   it('should call draw action with the selected card', () => {
-    const actionSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#type-action');
-    actionSelect.value = Action.DRAW;
-    actionSelect.dispatchEvent(new Event('change'));
-    
-    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      const actionSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#type-action');
+      actionSelect.value = Action.DRAW;
+      actionSelect.dispatchEvent(new Event('change'));
+      
+      fixture.detectChanges();
 
-    const cardValueSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#value-select');
-    cardValueSelect.value = CardValue.ACE.label;
-    cardValueSelect.dispatchEvent(new Event('change'));
+      const cardValueSelect = fixture.nativeElement.querySelector('#value-select');
+      cardValueSelect.value = cardValueSelect.options[0].value;
+      cardValueSelect.dispatchEvent(new Event('change'));
 
-    const cardSuitSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#suit-select');
-    cardSuitSelect.value = CardSuit.SPADE.symbol;
-    cardSuitSelect.dispatchEvent(new Event('change'));
+      const cardSuitSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#suit-select');
+      cardSuitSelect.value = cardSuitSelect.options[3].value;
+      cardSuitSelect.dispatchEvent(new Event('change'));
 
-    fixture.detectChanges();
+      fixture.detectChanges();
 
-    const btnDoAction: HTMLButtonElement = fixture.nativeElement.querySelector('#do-action-button');
-    btnDoAction.click();
+      const btnDoAction: HTMLButtonElement = fixture.nativeElement.querySelector('#do-action-button');
+      btnDoAction.click();
 
-    //expect(player.drawCard).toHaveBeenCalledWith(jasmine.objectContaining({ value: CardValue.ACE, suit: CardSuit.SPADE }));
-    expect(player.drawCard).toHaveBeenCalled();
+      expect(player.drawCard).toHaveBeenCalledWith(jasmine.objectContaining({ value: CardValue.ACE, suit: CardSuit.SPADE }));
+    }); 
   });
 
 });
