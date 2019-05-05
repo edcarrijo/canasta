@@ -27,7 +27,8 @@ describe('PlayerActionComponent with card hand selection', () => {
 
     player = jasmine.createSpyObj<Player>('player', {
       'getMustShowHandAction':true,
-      'drawCard':null
+      'drawCard':null,
+      'addRedThree':null
     });
     
     component.player = player;
@@ -35,9 +36,11 @@ describe('PlayerActionComponent with card hand selection', () => {
       <Card>{ value: CardValue.FOUR, suit: CardSuit.DIAMOND },
       <Card>{ value: CardValue.FIVE, suit: CardSuit.DIAMOND },
       <Card>{ value: CardValue.SIX, suit: CardSuit.DIAMOND },
-      <Card>{ value: CardValue.SEVEN, suit: CardSuit.DIAMOND }
+      <Card>{ value: CardValue.THREE, suit: CardSuit.DIAMOND }
     ];
-    fixture.detectChanges();
+    component.open();
+    //fixture.detectChanges();
+    fixture.autoDetectChanges();
   });
 
   it('should create', () => {
@@ -57,19 +60,17 @@ describe('PlayerActionComponent with card hand selection', () => {
   });
 
   it('should set my hand selection when opened', () => {
-    component.open();
     expect(component.handSelection.length).toEqual(player.hand.length);
   });
 
   it('should display card selection for draw action', () => {
-  
     fixture.whenStable().then(() => {
 
       const actionSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#type-action');
       actionSelect.value = Action.DRAW;
       actionSelect.dispatchEvent(new Event('change'));
       
-      fixture.detectChanges();
+      //fixture.detectChanges();
 
       expect(component.currentAction.type).toEqual(Action.DRAW);
 
@@ -79,8 +80,6 @@ describe('PlayerActionComponent with card hand selection', () => {
       const handCardSelectionSection: HTMLDivElement = fixture.nativeElement.querySelector('#handCardSelectionSection');
       expect(handCardSelectionSection).toBeNull('hand selection should not be shown');
     });
-
-   
   });
 
   it('should call draw action with the selected card', () => {
@@ -89,7 +88,7 @@ describe('PlayerActionComponent with card hand selection', () => {
       actionSelect.value = Action.DRAW;
       actionSelect.dispatchEvent(new Event('change'));
       
-      fixture.detectChanges();
+      //fixture.detectChanges();
 
       const cardValueSelect = fixture.nativeElement.querySelector('#value-select');
       cardValueSelect.value = cardValueSelect.options[0].value;
@@ -99,7 +98,7 @@ describe('PlayerActionComponent with card hand selection', () => {
       cardSuitSelect.value = cardSuitSelect.options[3].value;
       cardSuitSelect.dispatchEvent(new Event('change'));
 
-      fixture.detectChanges();
+      //fixture.detectChanges();
 
       const btnDoAction: HTMLButtonElement = fixture.nativeElement.querySelector('#do-action-button');
       btnDoAction.click();
@@ -107,5 +106,45 @@ describe('PlayerActionComponent with card hand selection', () => {
       expect(player.drawCard).toHaveBeenCalledWith(jasmine.objectContaining({ value: CardValue.ACE, suit: CardSuit.SPADE }));
     }); 
   });
+
+  it('should display hand selection for add red three action', () => {
+    fixture.whenStable().then(() => {
+
+      const actionSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#type-action');
+      actionSelect.value = Action.ADD_RED_THREE;
+      actionSelect.dispatchEvent(new Event('change'));
+      
+      fixture.detectChanges();
+
+      expect(component.currentAction.type).toEqual(Action.ADD_RED_THREE);
+
+      const newCardSelectionSection: HTMLDivElement = fixture.nativeElement.querySelector('#newCardSelectionSection');
+      expect(newCardSelectionSection).toBeNull('card selection should not be shown');
+  
+      const handCardSelectionSection: HTMLDivElement = fixture.nativeElement.querySelector('#handCardSelectionSection');
+      expect(handCardSelectionSection).toBeDefined();
+    });
+  });
+
+  it('should call add red three action with the selected card', () => {
+    fixture.whenStable().then(() => {
+      const actionSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#type-action');
+      actionSelect.value = Action.ADD_RED_THREE;
+      actionSelect.dispatchEvent(new Event('change'));
+      
+      fixture.detectChanges();
+
+      const shownCards = fixture.nativeElement.querySelectorAll('canasta-card');
+      shownCards[3].click(); //three of diamonds of my hand
+
+      fixture.detectChanges();
+
+      const btnDoAction: HTMLButtonElement = fixture.nativeElement.querySelector('#do-action-button');
+      btnDoAction.click();
+
+      expect(player.addRedThree).toHaveBeenCalledWith(jasmine.objectContaining({ value: CardValue.THREE, suit: CardSuit.DIAMOND }));
+    }); 
+  });
+
 
 });
