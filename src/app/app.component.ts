@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
 
   lastDiscard: Card;
   myHandSelection: CardSelectionModel[] = [];
+  inverted = false;
 
 
   constructor(protected board: Board, 
@@ -39,5 +40,9 @@ export class AppComponent implements OnInit {
       this.lastDiscard = this.board.discardStack[this.board.discardStack.length - 1];
     if(action == Action.DRAW_DISCARD)
       this.lastDiscard = null;
+  }
+
+  invertPlayersSwitch(){
+    this.inverted = !this.inverted;
   }
 }

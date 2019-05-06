@@ -69,8 +69,6 @@ describe('PlayerActionComponent with card hand selection', () => {
       const actionSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#type-action');
       actionSelect.value = Action.DRAW;
       actionSelect.dispatchEvent(new Event('change'));
-      
-      //fixture.detectChanges();
 
       expect(component.currentAction.type).toEqual(Action.DRAW);
 
@@ -87,18 +85,17 @@ describe('PlayerActionComponent with card hand selection', () => {
       const actionSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#type-action');
       actionSelect.value = Action.DRAW;
       actionSelect.dispatchEvent(new Event('change'));
-      
-      //fixture.detectChanges();
 
       const cardValueSelect = fixture.nativeElement.querySelector('#value-select');
-      cardValueSelect.value = cardValueSelect.options[0].value;
+      cardValueSelect.value = cardValueSelect.options[1].value;
       cardValueSelect.dispatchEvent(new Event('change'));
+      expect(component.currentAction.value).toBe(CardValue.ACE);
 
       const cardSuitSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#suit-select');
       cardSuitSelect.value = cardSuitSelect.options[3].value;
       cardSuitSelect.dispatchEvent(new Event('change'));
-
-      //fixture.detectChanges();
+      
+      expect(component.currentAction.suit).toBe(CardSuit.SPADE);
 
       const btnDoAction: HTMLButtonElement = fixture.nativeElement.querySelector('#do-action-button');
       btnDoAction.click();
@@ -113,9 +110,6 @@ describe('PlayerActionComponent with card hand selection', () => {
       const actionSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#type-action');
       actionSelect.value = Action.ADD_RED_THREE;
       actionSelect.dispatchEvent(new Event('change'));
-      
-      fixture.detectChanges();
-
       expect(component.currentAction.type).toEqual(Action.ADD_RED_THREE);
 
       const newCardSelectionSection: HTMLDivElement = fixture.nativeElement.querySelector('#newCardSelectionSection');
@@ -131,13 +125,9 @@ describe('PlayerActionComponent with card hand selection', () => {
       const actionSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#type-action');
       actionSelect.value = Action.ADD_RED_THREE;
       actionSelect.dispatchEvent(new Event('change'));
-      
-      fixture.detectChanges();
-
+  
       const shownCards = fixture.nativeElement.querySelectorAll('canasta-card');
       shownCards[3].click(); //three of diamonds of my hand
-
-      fixture.detectChanges();
 
       const btnDoAction: HTMLButtonElement = fixture.nativeElement.querySelector('#do-action-button');
       btnDoAction.click();

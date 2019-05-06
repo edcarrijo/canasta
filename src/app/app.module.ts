@@ -12,6 +12,10 @@ import { Game } from './model/game';
 import { MePlayer } from './model/player/me-player';
 import { OtherPlayer } from './model/player/other-player';
 import { PlayerActionComponent } from './player-action/player-action.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faUserNinja, faUser, faExchangeAlt, faUndoAlt } from '@fortawesome/free-solid-svg-icons'
+import { faGrinBeam, faGrinBeamSweat } from '@fortawesome/free-regular-svg-icons'
 
 let playerFactory = (board: Board, game: Game) => {
   return new OtherPlayer(board, game);
@@ -30,7 +34,8 @@ let playerFactory = (board: Board, game: Game) => {
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule
   ],
   providers: [
     Board,
@@ -43,4 +48,8 @@ let playerFactory = (board: Board, game: Game) => {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor() {
+    library.add(faUserNinja, faUser, faGrinBeam, faGrinBeamSweat, faExchangeAlt, faUndoAlt);
+  }
+}
