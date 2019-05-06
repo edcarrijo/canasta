@@ -32,7 +32,10 @@ export class PlayerActionComponent implements OnInit {
   }
 
   isCardSelectionNeeded():boolean{
-    return this.currentAction.type != Action.DRAW_DISCARD;
+    return this.currentAction.type == Action.ADD_RED_THREE || 
+           this.currentAction.type == Action.SEQUENCE ||
+           this.currentAction.type == Action.DISCARD ||
+           (this.currentAction.type == Action.DRAW && this.player.getMustShowHandAction());
   }
 
   open(){
