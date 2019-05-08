@@ -67,7 +67,6 @@ export class PlayerActionComponent implements OnInit {
       case Action.SEQUENCE:
         this.player.addSequence(cardActionList);
         break;
-      
     }
 
     this.setHandSelection();

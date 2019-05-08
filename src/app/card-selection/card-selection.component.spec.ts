@@ -50,4 +50,19 @@ describe('CardSelectionComponent', () => {
         expect(secondCard.className).toContain('selected');
       });
 
+      it('should select just one card when single selection active', () => {
+        component.singleSelection = true;
+        const cards = fixture.nativeElement.querySelectorAll('canasta-card');
+        const secondCard: HTMLElement = cards[1];
+        secondCard.click();
+        fixture.detectChanges();
+        const thirdCard: HTMLElement = cards[2];
+        thirdCard.click();
+        fixture.detectChanges();
+        expect(source[1].selected).toBeFalsy();
+        expect(source[2].selected).toBeTruthy();
+        
+        expect(thirdCard.className).toContain('selected');
+      });
+
 });

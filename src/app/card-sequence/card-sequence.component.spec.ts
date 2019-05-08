@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { CardSequenceComponent } from './card-sequence.component';
 import { CardComponent } from '../card/card.component';
 import { Card, CardSuit, CardValue, Sequence } from '../model';
+import { CardSelectionComponent } from '../card-selection/card-selection.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('CardSequenceComponent', () => {
     let component: CardSequenceComponent;
@@ -19,8 +21,8 @@ describe('CardSequenceComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-          imports: [FormsModule],
-          declarations: [ CardComponent, CardSequenceComponent ]
+          imports: [FormsModule, FontAwesomeModule],
+          declarations: [ CardComponent, CardSelectionComponent, CardSequenceComponent ]
         })
         .compileComponents();
       }));
