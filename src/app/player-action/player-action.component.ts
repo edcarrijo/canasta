@@ -105,4 +105,16 @@ export class PlayerActionComponent implements OnInit {
         && this.player.getMustShowHandAction();
   }
 
+  selectSuit(suit: CardSuit){
+    this.currentAction.suit = suit;
+  }
+
+  selectValue(value: CardValue){
+    this.currentAction.value = value;
+  }
+
+  selectAction(action: string){
+    this.currentAction.type = action;
+  }
+
 }

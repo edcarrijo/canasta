@@ -11,79 +11,52 @@
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="type-action" class="col-form-label">Type action:</label>
-               <select class="form-control" id="type-action" name="type-action" [(ngModel)]="currentAction.type">
-                  <option *ngFor="let action of actionList" [value]="action">{{action}}</option>
-                </select>
                 <div class="d-flex flex-row justify-content-center">
                     <div class="btn-toolbar" role="toolbar">
                         <div class="btn-group mr-2" role="group">
-                            <button type="button" class="btn btn-secondary" *ngFor="let action of actionList">{{action}}</button>
+                            <button type="button" class="btn btn-secondary" 
+                              *ngFor="let action of actionList"
+                              (click)="selectAction(action)"
+                              [ngClass]="{ 'active': currentAction.type == action}">{{action}}</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="form-group row" *ngIf="isCardSelectionNeeded() && !mustShowMyHandAction()" id="newCardSelectionSection">
-              <div class="col">
-                  <label for="suit-select" class="form-label">suit:</label>
-                  <select class="form-control" id="suit-select" name="suit-select" [(ngModel)]="currentAction.suit">
-                    <option *ngFor="let suit of cardSuitList" [ngValue]="suit">{{suit.symbol}}</option>
-                  </select>
-              </div>
-              <div class="col">
-                  <label for="value-select" class="form-label">Value:</label>
-                  <select class="form-control" id="value-select" name="value-select" [(ngModel)]="currentAction.value">
-                      <option *ngFor="let value of cardValueList" [ngValue]="value">{{value.label}}</option>
-                    </select>
-              </div>
-            </div>
             <div *ngIf="isCardSelectionNeeded() && !mustShowMyHandAction()" id="newCardSelectionSection2">
-                <div class="form-group row">
-                  <div class="col">
-
-                      <div class="d-flex flex-row justify-content-center">
-                          <div class="btn-toolbar" role="toolbar">
-                              <div class="btn-group mr-2" role="group">
-                                  <button type="button" class="btn btn-light red-text">♦</button>
-                                  <button type="button" class="btn btn-light">♣</button>
-                                  <button type="button" class="btn btn-light red-text">♥</button>
-                                  <button type="button" class="btn btn-light">♠</button>
-                              </div>
-                          </div>
-                      </div>
-
-                  </div>
+ 
+                <div class="d-flex flex-row justify-content-center">
+                  <canasta-card [card]="{ value: currentAction.value, suit: currentAction.suit }"></canasta-card>
                 </div>
-                <div class="form-group row">
-                  <div class="col">
-                      <div class="d-flex flex-row justify-content-center">
-                          <div class="btn-toolbar" role="toolbar">
-                              <div class="btn-group mr-2" role="group">
-                                  <button type="button" class="btn btn-light">A</button>
-                                  <button type="button" class="btn btn-light">2</button>
-                                  <button type="button" class="btn btn-light">3</button>
-                                  <button type="button" class="btn btn-light">4</button>
-                                  <button type="button" class="btn btn-light">5</button>
-                                  <button type="button" class="btn btn-light">6</button>
-                                  <button type="button" class="btn btn-light">7</button>
-                                  <button type="button" class="btn btn-light">8</button>
-                                  <button type="button" class="btn btn-light">9</button>
-                                  <button type="button" class="btn btn-light">10</button>
-                                  <button type="button" class="btn btn-light">J</button>
-                                  <button type="button" class="btn btn-light">Q</button>
-                                  <button type="button" class="btn btn-light">K</button>
-                                  <button type="button" class="btn btn-light">JOKER</button>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+                <div class="d-flex flex-row justify-content-center mt-3">
+                    <div class="btn-toolbar" role="toolbar">
+                        <div class="btn-group mr-2" role="group">
+                            <button *ngFor="let suit of cardSuitList"
+                              type="button" 
+                              class="btn btn-light"
+                              (click)="selectSuit(suit)"
+                              class="{{ suit.styleClass }}"
+                              id="{{ 'btnSuit' + suit.id }}"
+                              [ngClass]="{ 'active': currentAction.suit == suit}">{{suit.symbol}}</button>
+                        </div>
+                    </div>
                 </div>
+                <div class="d-flex flex-row justify-content-center mt-3">
+                    <div class="btn-toolbar" role="toolbar">
+                        <div class="btn-group mr-2" role="group">
+                            <button *ngFor="let value of cardValueList"
+                              type="button" 
+                              class="btn btn-light"
+                              (click)="selectValue(value)"
+                              id="{{ 'btnValue' + value.importance }}"
+                              [ngClass]="{ 'active': currentAction.value == value}">{{value.label}}</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             
-            <div class="row" *ngIf="isCardSelectionNeeded() && mustShowMyHandAction()" id="handCardSelectionSection">
-              <div class="col">
+            <div class="d-flex flex-row justify-content-center mt-3" *ngIf="isCardSelectionNeeded() && mustShowMyHandAction()" id="handCardSelectionSection">
                 <canasta-card-selection [source]="handSelection"></canasta-card-selection>
-              </div>
             </div>
           </form>
         </div>
