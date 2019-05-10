@@ -22,11 +22,11 @@ export class AppComponent implements OnInit {
 
 
   constructor(
-    protected state: StateService,
-    @Inject('me') protected me: PlayerService,
-    @Inject('partner') protected partner: PlayerService,
-    @Inject('opponent1') protected opponent1: PlayerService,
-    @Inject('opponent2') protected opponent2: PlayerService){ }
+    public state: StateService,
+    @Inject('me') public me: PlayerService,
+    @Inject('partner') public partner: PlayerService,
+    @Inject('opponent1') public opponent1: PlayerService,
+    @Inject('opponent2') public opponent2: PlayerService){ }
 
   ngOnInit() {
   }

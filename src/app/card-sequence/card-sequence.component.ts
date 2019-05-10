@@ -16,16 +16,16 @@ export class CardSequenceComponent implements OnInit {
     this.cardSelectionSource = this.sequence.cards.map(card => <CardSelectionModel>{ card: card });
   }
 
-  protected showToolbar():boolean{
+  showToolbar():boolean{
     return !!this.cardSelectionSource.find(selection => selection.selected);
   }
 
-  protected moveLeft() {
+  moveLeft() {
     let card = this.cardSelectionSource.find(card => card.selected);
     this.move(this.cardSelectionSource, card, -1);
   };
   
-  protected moveRight() {
+  moveRight() {
     let card = this.cardSelectionSource.find(card => card.selected);
     this.move(this.cardSelectionSource, card, 1);
   };

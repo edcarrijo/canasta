@@ -11,6 +11,7 @@ export class StateService{
     public board: Board;
     private undoHistory: UndoHistory<Board>;
 
+    
     constructor(){
         this.initialize();
     }
