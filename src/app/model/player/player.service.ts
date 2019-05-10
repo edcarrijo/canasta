@@ -1,15 +1,12 @@
 import { Card } from '../card';
-import { Board } from '../board';
-import { Game } from '../game';
+import { GameService } from '../game.service';
+import { StateService } from '../state/state.service';
 
-export abstract class Player{
-    protected _board: Board;
-    protected _game: Game;
+export abstract class PlayerService{
+    protected _game: GameService;
     hand: Card[];
-    handCount: number;
 
-    constructor(board: Board, game: Game){
-        this._board = board;
+    constructor(game: GameService){
         this._game = game;
         this.hand = [];
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Player, Action, CardValue, CardSuit, Card } from '../model';
+import { PlayerService, Action, CardValue, CardSuit, Card } from '../model';
 import { CardSelectionModel } from '../card-selection/card-selection.model';
+
 declare var $: any;
 
 @Component({
@@ -9,7 +10,7 @@ declare var $: any;
 })
 export class PlayerActionComponent implements OnInit {
 
-  @Input() player: Player;
+  @Input() player: PlayerService;
   @Input() modalId: string;
   @Output() actionDone = new EventEmitter<string>();
 

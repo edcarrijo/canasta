@@ -15,8 +15,9 @@
                     <div class="btn-toolbar" role="toolbar">
                         <div class="btn-group mr-2" role="group">
                             <button type="button" class="btn btn-secondary" 
-                              *ngFor="let action of actionList"
+                              *ngFor="let action of actionList; let i = index"
                               (click)="selectAction(action)"
+                              id="{{ 'btnAction' + i }}"
                               [ngClass]="{ 'active': currentAction.type == action}">{{action}}</button>
                         </div>
                     </div>

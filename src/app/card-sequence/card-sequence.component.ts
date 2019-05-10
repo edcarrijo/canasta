@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Sequence } from '../model/game';
+import { Sequence } from '../model/game.service';
 import { CardSelectionModel } from '../card-selection/card-selection.model';
 
 @Component({

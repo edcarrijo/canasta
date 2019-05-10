@@ -2,22 +2,19 @@
 import { Injectable } from '@angular/core';
 import { Card } from './card';
 import { CardSuit } from './card-suit';
+import { Game } from './state/game';
 
 @Injectable()
-export class Game{
-    public redThrees: Card[];
-    public sequences: Sequence[];
+export class GameService{
 
-    public constructor(){
-        this.redThrees = [];
-        this.sequences = [];
+    constructor(public game: Game){
     }
 
     addRedThree(card: Card){
         if(!this.isRedThree(card)){
             throw new Error('The card is not a red three');
         }
-        this.redThrees.push(card);
+        this.game.redThrees.push(card);
     }
 
     private isRedThree(card: Card){
@@ -25,7 +22,7 @@ export class Game{
     }
 
     addSequence(cardList: Card[]){
-        this.sequences.push(<Sequence>{ cards: cardList});
+        this.game.sequences.push(<Sequence>{ cards: cardList});
     }
 }
 

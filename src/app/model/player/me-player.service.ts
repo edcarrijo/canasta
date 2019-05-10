@@ -1,14 +1,15 @@
-import { Player } from './player';
+import { PlayerService } from './player.service';
 import { Card } from '../card';
-import { Board } from '../board';
-import { Game } from '../game';
+import { GameService } from '../game.service';
 import { Injectable, Inject } from '@angular/core';
+import { Player } from '../state/player';
+import { Board } from '../state/board';
 
 @Injectable()
-export class MePlayer extends Player{
-
-    constructor(board: Board, @Inject('myGame') game: Game){
-        super(board, game);
+export class MePlayerService extends PlayerService{
+    constructor(@Inject('myGame') game: GameService, private player: Player, private board: Board){
+        super(game);
+        this.hand = player.hand;
     }
 
     getMustShowHandAction(): boolean {
@@ -16,32 +17,33 @@ export class MePlayer extends Player{
     }
 
     drawCard(card: Card) {
-        this.hand.push(card);
-        this._board.maindDeckCount--;
+        this.player.hand.push(card);
+        this.board.maindDeckCount--;
     }
+
     discard(card: Card) {
         var myHandCard = this.removeCardFromMyHand(card);
-        this._board.discardStack.push(myHandCard);
+        this.board.discardStack.push(myHandCard);
     }
     addRedThree(card: Card) {
         this._game.addRedThree(card);
         this.removeCardFromMyHand(card);
     }
     drawDiscard(){
-        this.hand.push(...this._board.discardStack);
-        this._board.discardStack = [];
+        this.player.hand.push(...this.board.discardStack);
+        this.board.discardStack = [];
     }
 
     private removeCardFromMyHand(card: Card): Card{
         var myHandCard = this.findCardInMyHand(card);
 
         const myHandCardIndex = this.hand.indexOf(myHandCard);
-        this.hand.splice(myHandCardIndex,1);
+        this.player.hand.splice(myHandCardIndex,1);
         return myHandCard;
     }
 
     private findCardInMyHand(card: Card) {
-        var myHandCard = this.hand
+        var myHandCard = this.player.hand
             .find(c => c.value.importance == card.value.importance
                 && c.suit.id == card.suit.id);
         if (!myHandCard)

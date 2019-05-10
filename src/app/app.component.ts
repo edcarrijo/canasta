@@ -1,15 +1,11 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { Board } from './model/board';
-import { Game } from './model/game';
-import { CardValue } from './model/card-value';
-import { CardSuit } from './model/card-suit';
 import { Action } from './model/action';
-import { Player as PlayerEnum } from './model/player/palyer.enum';
 import { Card } from './model/card';
 import { CardSelectionModel } from './card-selection/card-selection.model';
-import { MePlayer } from './model/player/me-player';
-import { Player } from './model/player/player';
-import { PlayerActionComponent } from './player-action/player-action.component';
+import { MePlayerService } from './model/player/me-player.service';
+import { PlayerService } from './model/player/player.service';
+import { StateService } from './model/state/state.service';
+
 declare var $: any;
 
 @Component({
@@ -22,27 +18,38 @@ export class AppComponent implements OnInit {
   lastDiscard: Card;
   myHandSelection: CardSelectionModel[] = [];
   inverted = false;
+  hideMyHand = false;
 
 
-  constructor(protected board: Board, 
-    protected me: MePlayer,
-    @Inject('myGame') protected myGame: Game,
-    @Inject('opponentGame') protected opponentGame: Game,
-    @Inject('partner') protected partner: Player,
-    @Inject('opponent1') protected opponent1: Player,
-    @Inject('opponent2') protected opponent2: Player){ }
+  constructor(
+    protected state: StateService,
+    @Inject('me') protected me: PlayerService,
+    @Inject('partner') protected partner: PlayerService,
+    @Inject('opponent1') protected opponent1: PlayerService,
+    @Inject('opponent2') protected opponent2: PlayerService){ }
 
   ngOnInit() {
   }
 
   actionDone(action: string){
-    if(action == Action.DISCARD)
-      this.lastDiscard = this.board.discardStack[this.board.discardStack.length - 1];
-    if(action == Action.DRAW_DISCARD)
-      this.lastDiscard = null;
-  }
+    this.checkLastDiscard();
+    this.state.registerState();
 
+  }
+  checkLastDiscard(){
+    if(this.state.board.discardStack.length == 0)
+      this.lastDiscard = null;
+    else
+      this.lastDiscard = this.state.board.discardStack[this.state.board.discardStack.length - 1];
+  }
+  undo(){
+    this.state.undo();
+    this.checkLastDiscard();
+  }
   invertPlayersSwitch(){
     this.inverted = !this.inverted;
+  }
+  hideMyHandSwitch(){
+    this.hideMyHand = !this.hideMyHand;
   }
 }

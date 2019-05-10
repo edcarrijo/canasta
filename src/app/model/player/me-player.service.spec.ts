@@ -1,20 +1,20 @@
-import { MePlayer } from "./me-player";
-import { Board } from '../board';
-import { Game } from '../game';
+import { MePlayerService } from "./me-player.service";
+import { BoardService } from '../board.service';
+import { GameService } from '../game.service';
 import { Card } from '../card';
 import { CardValue } from '../card-value';
 import { CardSuit } from '../card-suit';
 
 describe('MePlayer draw a card', () => {
-    let me: MePlayer;
-    let board: Board;
+    let me: MePlayerService;
+    let board: BoardService;
     let cardAction =  <Card>{ value: CardValue.ACE, suit: CardSuit.SPADE }
     let initialMaindDeckCount: number;
 
     beforeEach(() => {
-        board = new Board();
-        let game = new Game();
-        me = new MePlayer(board, game);
+        board = new BoardService();
+        let game = new GameService();
+        me = new MePlayerService(board, game);
         initialMaindDeckCount = board.maindDeckCount;
         me.drawCard(cardAction);
     });
@@ -30,13 +30,13 @@ describe('MePlayer draw a card', () => {
 });
 
 describe('MePlayer discard a card', () => {
-    let me: MePlayer;
-    let board: Board;
+    let me: MePlayerService;
+    let board: BoardService;
      
     beforeEach(() => {
-        board = new Board;
-        let game = new Game();
-        me = new MePlayer(board, game);
+        board = new BoardService;
+        let game = new GameService();
+        me = new MePlayerService(board, game);
         me.hand = [
             <Card>{ value: CardValue.ACE, suit: CardSuit.SPADE },
             <Card>{ value: CardValue.TWO, suit: CardSuit.HEART }

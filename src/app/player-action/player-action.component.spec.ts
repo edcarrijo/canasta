@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlayerActionComponent } from './player-action.component';
-import { Board, Game, Player, Card, CardValue, CardSuit, Action } from '../model';
+import { PlayerService, Card, CardValue, CardSuit, Action } from '../model';
 import { FormsModule } from '@angular/forms';
 import { CardSelectionComponent } from '../card-selection/card-selection.component';
 import { CardComponent } from '../card/card.component';
@@ -11,7 +11,7 @@ import { By } from '@angular/platform-browser';
 describe('PlayerActionComponent with card hand selection', () => {
   let component: PlayerActionComponent;
   let fixture: ComponentFixture<PlayerActionComponent>;
-  let player: Player;
+  let player: PlayerService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -25,7 +25,7 @@ describe('PlayerActionComponent with card hand selection', () => {
     fixture = TestBed.createComponent(PlayerActionComponent);
     component = fixture.componentInstance;
 
-    player = jasmine.createSpyObj<Player>('player', {
+    player = jasmine.createSpyObj<PlayerService>('player', {
       'getMustShowHandAction':true,
       'drawCard':null,
       'addRedThree':null,
@@ -76,15 +76,7 @@ describe('PlayerActionComponent with card hand selection', () => {
     fixture.whenStable().then(() => {
       changeAction(fixture, Action.DRAW, component);
 
-      const cardValueSelect = fixture.nativeElement.querySelector('#value-select');
-      cardValueSelect.value = cardValueSelect.options[1].value;
-      cardValueSelect.dispatchEvent(new Event('change'));
-      expect(component.currentAction.value).toBe(CardValue.ACE);
-
-      const cardSuitSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#suit-select');
-      cardSuitSelect.value = cardSuitSelect.options[3].value;
-      cardSuitSelect.dispatchEvent(new Event('change'));
-      expect(component.currentAction.suit).toBe(CardSuit.SPADE);
+      selectCard(fixture, component,CardValue.ACE, CardSuit.SPADE);
 
       const btnDoAction: HTMLButtonElement = fixture.nativeElement.querySelector('#do-action-button');
       btnDoAction.click();
@@ -183,7 +175,7 @@ describe('PlayerActionComponent with card hand selection', () => {
 describe('PlayerActionComponent without card hand selection', () => {
   let component: PlayerActionComponent;
   let fixture: ComponentFixture<PlayerActionComponent>;
-  let player: Player;
+  let player: PlayerService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -197,7 +189,7 @@ describe('PlayerActionComponent without card hand selection', () => {
     fixture = TestBed.createComponent(PlayerActionComponent);
     component = fixture.componentInstance;
 
-    player = jasmine.createSpyObj<Player>('player', {
+    player = jasmine.createSpyObj<PlayerService>('player', {
       'getMustShowHandAction':false,
       'drawCard':null,
       'addRedThree':null,
@@ -251,7 +243,7 @@ describe('PlayerActionComponent without card hand selection', () => {
       changeAction(fixture, Action.ADD_RED_THREE, component);
   
       fixture.whenStable().then(() => {
-        selectCard(fixture, component, CardValue.THREE, CardSuit.HEART, 2);
+        selectCard(fixture, component, CardValue.THREE, CardSuit.HEART);
         const btnDoAction: HTMLButtonElement = fixture.nativeElement.querySelector('#do-action-button');
         btnDoAction.click();
   
@@ -272,7 +264,7 @@ describe('PlayerActionComponent without card hand selection', () => {
       changeAction(fixture, Action.DISCARD, component);
   
       fixture.whenStable().then(() => {
-        selectCard(fixture, component, CardValue.KING, CardSuit.SPADE, 3);
+        selectCard(fixture, component, CardValue.KING, CardSuit.SPADE);
         const btnDoAction: HTMLButtonElement = fixture.nativeElement.querySelector('#do-action-button');
         btnDoAction.click();
   
@@ -293,7 +285,7 @@ describe('PlayerActionComponent without card hand selection', () => {
       changeAction(fixture, Action.SEQUENCE, component);
       
       fixture.whenStable().then(() => {
-        selectCard(fixture, component, CardValue.ACE, CardSuit.SPADE, 3);
+        selectCard(fixture, component, CardValue.ACE, CardSuit.SPADE);
 
         const btnDoAction: HTMLButtonElement = fixture.nativeElement.querySelector('#do-action-button');
         btnDoAction.click(); 
@@ -310,17 +302,14 @@ describe('PlayerActionComponent without card hand selection', () => {
 });
 
 function selectCard(fixture: ComponentFixture<PlayerActionComponent>, component: PlayerActionComponent, 
-  cardValue: CardValue, cardSuit: CardSuit, cardSuitIndex: number) {
-    
-  const cardValueSelect = fixture.nativeElement.querySelector('#value-select');
-  cardValueSelect.value = cardValueSelect.options[cardValue.importance].value;
-  cardValueSelect.dispatchEvent(new Event('change'));
-  fixture.detectChanges();
+  cardValue: CardValue, cardSuit: CardSuit) {
+  
+  const valueButton: HTMLButtonElement = fixture.nativeElement.querySelector(`#btnValue${cardValue.importance}`);
+  valueButton.click();
   expect(component.currentAction.value).toBe(cardValue);
 
-  const cardSuitSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#suit-select');
-  cardSuitSelect.value = cardSuitSelect.options[cardSuitIndex].value;
-  cardSuitSelect.dispatchEvent(new Event('change'));
+  const suitButton: HTMLButtonElement = fixture.nativeElement.querySelector(`#btnSuit${cardSuit.id}`);
+  suitButton.click();
   expect(component.currentAction.suit).toBe(cardSuit);
 }
 
@@ -349,9 +338,9 @@ function testNoCardSelectionDisplay(action: string, fixture: ComponentFixture<Pl
 }
 
 function changeAction(fixture: ComponentFixture<PlayerActionComponent>, action: string, component: PlayerActionComponent) {
-  const actionSelect: HTMLSelectElement = fixture.nativeElement.querySelector('#type-action');
-  actionSelect.value = action;
-  actionSelect.dispatchEvent(new Event('change'));
+  const actionIndex = Action.getAll().indexOf(action);
+  const actionButton: HTMLButtonElement = fixture.nativeElement.querySelector(`#btnAction${actionIndex}`);
+  actionButton.click();
   expect(component.currentAction.type).toEqual(action);
 }
 
