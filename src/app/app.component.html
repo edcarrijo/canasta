@@ -99,6 +99,6 @@
 <canasta-player-action [player]="opponent1" [hand]="state.board.opponent1.hand" modalId="opponent1Action" (actionDone)="actionDone($event)" #opponent1Action></canasta-player-action>
 <canasta-player-action [player]="opponent2" [hand]="state.board.opponent2.hand" modalId="opponent2Action" (actionDone)="actionDone($event)" #opponent2Action></canasta-player-action>
 
-<pre>
+<pre hidden>
   {{ state.board | json }}
 </pre>

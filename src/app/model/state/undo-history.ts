@@ -18,9 +18,13 @@ export class UndoHistory<T>{
     }
 
     undo():T{
+        let previousState: T;
         if(this.history.length > 1)
-            return this.history.pop();
+            previousState = this.history.pop();
         else
-            return this.history[0];
+            previousState =  this.history[0];
+
+        this.currentState = JSON.parse(JSON.stringify(previousState));;
+        return previousState;
     }
 }

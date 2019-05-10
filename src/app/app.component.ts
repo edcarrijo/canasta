@@ -34,7 +34,6 @@ export class AppComponent implements OnInit {
   actionDone(action: string){
     this.checkLastDiscard();
     this.state.registerState();
-
   }
   checkLastDiscard(){
     if(this.state.board.discardStack.length == 0)
