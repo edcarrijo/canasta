@@ -1,21 +1,22 @@
 import { MePlayerService } from "./me-player.service";
-import { BoardService } from '../board.service';
 import { GameService } from '../game.service';
 import { Card } from '../card';
 import { CardValue } from '../card-value';
 import { CardSuit } from '../card-suit';
+import { StateService } from '../state/state.service';
+
 
 describe('MePlayer draw a card', () => {
     let me: MePlayerService;
-    let board: BoardService;
     let cardAction =  <Card>{ value: CardValue.ACE, suit: CardSuit.SPADE }
     let initialMaindDeckCount: number;
+    let state: StateService;
 
     beforeEach(() => {
-        board = new BoardService();
-        let game = new GameService();
-        me = new MePlayerService(board, game);
-        initialMaindDeckCount = board.maindDeckCount;
+        state = new StateService();
+        let game = new GameService(state.board.myGame);
+        me = new MePlayerService(game, state.board.me, state.board);
+        initialMaindDeckCount = state.board.maindDeckCount;
         me.drawCard(cardAction);
     });
 
@@ -24,20 +25,22 @@ describe('MePlayer draw a card', () => {
     });
 
     it('remove one card from main deck', () => {
-        expect(board.maindDeckCount).toBe(initialMaindDeckCount-1);
+        expect(state.board.maindDeckCount).toBe(initialMaindDeckCount-1);
     });
 
 });
 
 describe('MePlayer discard a card', () => {
     let me: MePlayerService;
-    let board: BoardService;
+    let state: StateService;
      
     beforeEach(() => {
-        board = new BoardService;
-        let game = new GameService();
-        me = new MePlayerService(board, game);
-        me.hand = [
+        
+        state = new StateService();
+        let game = new GameService(state.board.myGame);
+        me = new MePlayerService(game, state.board.me, state.board);
+        
+        state.board.me.hand = [
             <Card>{ value: CardValue.ACE, suit: CardSuit.SPADE },
             <Card>{ value: CardValue.TWO, suit: CardSuit.HEART }
         ];
@@ -59,7 +62,7 @@ describe('MePlayer discard a card', () => {
     it('should  put selected card in the discard', () => {
         let cardToRemove = <Card>{ value: CardValue.TWO, suit: CardSuit.HEART }; 
         me.discard(cardToRemove);
-        expect(board.discardStack.some(card => card.value.importance == cardToRemove.value.importance 
+        expect(state.board.discardStack.some(card => card.value.importance == cardToRemove.value.importance 
             && card.suit.id == cardToRemove.suit.id))
             .toBeTruthy();
     });
