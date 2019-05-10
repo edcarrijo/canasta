@@ -4,11 +4,9 @@ import { StateService } from '../state/state.service';
 
 export abstract class PlayerService{
     protected _game: GameService;
-    hand: Card[];
 
     constructor(game: GameService){
         this._game = game;
-        this.hand = [];
     }
 
     abstract getMustShowHandAction(): boolean;

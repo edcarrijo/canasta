@@ -94,10 +94,10 @@
     </div>
 </main>
 
-<canasta-player-action [player]="me" modalId="meAction" (actionDone)="actionDone($event)" #meAction></canasta-player-action>
-<canasta-player-action [player]="partner" modalId="partnerAction" (actionDone)="actionDone($event)" #partnerAction></canasta-player-action>
-<canasta-player-action [player]="opponent1" modalId="opponent1Action" (actionDone)="actionDone($event)" #opponent1Action></canasta-player-action>
-<canasta-player-action [player]="opponent2" modalId="opponent2Action" (actionDone)="actionDone($event)" #opponent2Action></canasta-player-action>
+<canasta-player-action [player]="me" [hand]="state.board.me.hand" modalId="meAction" (actionDone)="actionDone($event)" #meAction></canasta-player-action>
+<canasta-player-action [player]="partner" [hand]="state.board.partner.hand" modalId="partnerAction" (actionDone)="actionDone($event)" #partnerAction></canasta-player-action>
+<canasta-player-action [player]="opponent1" [hand]="state.board.opponent1.hand" modalId="opponent1Action" (actionDone)="actionDone($event)" #opponent1Action></canasta-player-action>
+<canasta-player-action [player]="opponent2" [hand]="state.board.opponent2.hand" modalId="opponent2Action" (actionDone)="actionDone($event)" #opponent2Action></canasta-player-action>
 
 <pre>
   {{ state.board | json }}

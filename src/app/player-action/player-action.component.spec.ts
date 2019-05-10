@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CardSelectionComponent } from '../card-selection/card-selection.component';
 import { CardComponent } from '../card/card.component';
 import { By } from '@angular/platform-browser';
+import { StateService } from '../model/state/state.service';
 
 
 describe('PlayerActionComponent with card hand selection', () => {
@@ -35,7 +36,7 @@ describe('PlayerActionComponent with card hand selection', () => {
     });
     
     component.player = player;
-    player.hand = [
+    component.hand = [
       <Card>{ value: CardValue.FOUR, suit: CardSuit.HEART },
       <Card>{ value: CardValue.FIVE, suit: CardSuit.HEART },
       <Card>{ value: CardValue.SIX, suit: CardSuit.HEART },
@@ -63,7 +64,7 @@ describe('PlayerActionComponent with card hand selection', () => {
   });
 
   it('should set my hand selection when opened', () => {
-    expect(component.handSelection.length).toEqual(player.hand.length);
+    expect(component.handSelection.length).toEqual(component.hand.length);
   });
 
   it('should display card selection for draw action', () => {
@@ -199,7 +200,7 @@ describe('PlayerActionComponent without card hand selection', () => {
     });
     
     component.player = player;
-    player.hand = [];
+    
     component.open();
 
     fixture.autoDetectChanges();

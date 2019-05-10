@@ -9,7 +9,6 @@ import { Board } from '../state/board';
 export class MePlayerService extends PlayerService{
     constructor(@Inject('myGame') game: GameService, private player: Player, private board: Board){
         super(game);
-        this.hand = player.hand;
     }
 
     getMustShowHandAction(): boolean {
@@ -37,7 +36,7 @@ export class MePlayerService extends PlayerService{
     private removeCardFromMyHand(card: Card): Card{
         var myHandCard = this.findCardInMyHand(card);
 
-        const myHandCardIndex = this.hand.indexOf(myHandCard);
+        const myHandCardIndex = this.player.hand.indexOf(myHandCard);
         this.player.hand.splice(myHandCardIndex,1);
         return myHandCard;
     }

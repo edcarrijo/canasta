@@ -13,6 +13,7 @@ export class PlayerActionComponent implements OnInit {
   @Input() player: PlayerService;
   @Input() modalId: string;
   @Output() actionDone = new EventEmitter<string>();
+  @Input() hand: Card[];
 
   cardValueList: CardValue[];
   cardSuitList: CardSuit[];
@@ -95,7 +96,7 @@ export class PlayerActionComponent implements OnInit {
 
   private setHandSelection(){
     if(this.player.getMustShowHandAction()){
-      this.handSelection = this.player.hand.map(card => <CardSelectionModel>{ selected: false, card: card });
+      this.handSelection = this.hand.map(card => <CardSelectionModel>{ selected: false, card: card });
     }
   }
 

@@ -21,7 +21,7 @@ describe('MePlayer draw a card', () => {
     });
 
     it('put card in my hand', () => {
-        expect(me.hand[0]).toBe(cardAction);
+        expect(state.board.me.hand[0]).toBe(cardAction);
     });
 
     it('remove one card from main deck', () => {
@@ -39,7 +39,7 @@ describe('MePlayer discard a card', () => {
         state = new StateService();
         let game = new GameService(state.board.myGame);
         me = new MePlayerService(game, state.board.me, state.board);
-        
+
         state.board.me.hand = [
             <Card>{ value: CardValue.ACE, suit: CardSuit.SPADE },
             <Card>{ value: CardValue.TWO, suit: CardSuit.HEART }
@@ -54,7 +54,7 @@ describe('MePlayer discard a card', () => {
     it('should remove selected card from my hand', () => {
         let cardToRemove = <Card>{ value: CardValue.TWO, suit: CardSuit.HEART }; 
         me.discard(cardToRemove);
-        expect(me.hand.some(card => card.value.importance == cardToRemove.value.importance 
+        expect(state.board.me.hand.some(card => card.value.importance == cardToRemove.value.importance 
             && card.suit.id == cardToRemove.suit.id))
             .toBeFalsy();
     });
