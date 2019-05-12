@@ -18,7 +18,7 @@ export class CardComponent implements OnInit {
 
   getImagePath(){
     if(this.card.suit){
-      const image = this.card.suit.getImageFaces().find(face => face.value == this.card.value.importance).image;;
+      const image = this.card.suit.getImageFaces().find(face => face.value == this.card.value.rank).image;;
       return 'assets/img/faces/' + image;
     }
   }

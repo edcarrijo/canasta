@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { CardComponent } from './card/card.component';
 import { CardBackComponent } from './card-back/card-back.component';
 import { CardSelectionComponent } from './card-selection/card-selection.component';
-import { CardSequenceComponent } from './card-sequence/card-sequence.component';
+import { CardMeldComponent } from './card-meld/card-meld.component';
 import { GameService } from './model/game.service';
 import { MePlayerService } from './model/player/me-player.service';
 import { OtherPlayerService } from './model/player/other-player.service';
@@ -16,6 +16,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUserNinja, faUser, faExchangeAlt, faUndoAlt, faPlus, faCaretRight, faCaretLeft, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { faGrinBeam, faGrinBeamSweat } from '@fortawesome/free-regular-svg-icons'
 import { StateService } from './model/state/state.service';
+import { TableService } from './model/table.service';
 
 
 let myGameFactory = (stateService: StateService) => {
@@ -26,17 +27,17 @@ let opponentGameFactory = (stateService: StateService) => {
   return new GameService(stateService.createOpponentGame());
 }
 
-let mePlayerFactory = (game: GameService, stateService: StateService) => {
-  return new MePlayerService(game, stateService.createMePlayer(), stateService.board);
+let mePlayerFactory = (tableService: TableService, game: GameService, stateService: StateService) => {
+  return new MePlayerService(tableService, game, stateService.createMePlayer());
 };
-let partnerPlayerFactory = (game: GameService, stateService: StateService) => {
-  return new OtherPlayerService(game, stateService.createPartnerPlayer(),stateService.board);
+let partnerPlayerFactory = (tableService: TableService, game: GameService, stateService: StateService) => {
+  return new OtherPlayerService(tableService, game, stateService.createPartnerPlayer());
 };
-let opponent1PlayerFactory = (game: GameService, stateService: StateService) => {
-  return new OtherPlayerService(game, stateService.createOponent1Player(), stateService.board);
+let opponent1PlayerFactory = (tableService: TableService, game: GameService, stateService: StateService) => {
+  return new OtherPlayerService(tableService, game, stateService.createOponent1Player());
 };
-let opponent2PlayerFactory = (game: GameService, stateService: StateService) => {
-  return new OtherPlayerService(game, stateService.createOponent2Player(), stateService.board);
+let opponent2PlayerFactory = (tableService, game: GameService, stateService: StateService) => {
+  return new OtherPlayerService(tableService, game, stateService.createOponent2Player());
 };
 
 @NgModule({
@@ -45,7 +46,7 @@ let opponent2PlayerFactory = (game: GameService, stateService: StateService) => 
     CardComponent,
     CardBackComponent,
     CardSelectionComponent,
-    CardSequenceComponent,
+    CardMeldComponent,
     PlayerActionComponent
   ],
   imports: [
@@ -56,12 +57,13 @@ let opponent2PlayerFactory = (game: GameService, stateService: StateService) => 
   ],
   providers: [
     StateService,
+    TableService,
     { provide: 'myGame', useFactory: myGameFactory, deps: [StateService] },
     { provide: 'opponentGame', useFactory: opponentGameFactory, deps: [StateService] },
-    { provide: 'me', useFactory: mePlayerFactory, deps: ['myGame', StateService] },
-    { provide: 'partner', useFactory: partnerPlayerFactory, deps: ['myGame', StateService] },
-    { provide: 'opponent1', useFactory: opponent1PlayerFactory, deps: ['opponentGame', StateService] },
-    { provide: 'opponent2', useFactory: opponent2PlayerFactory, deps: ['opponentGame', StateService] }
+    { provide: 'me', useFactory: mePlayerFactory, deps: [TableService, 'myGame', StateService] },
+    { provide: 'partner', useFactory: partnerPlayerFactory, deps: [TableService, 'myGame', StateService] },
+    { provide: 'opponent1', useFactory: opponent1PlayerFactory, deps: [TableService, 'opponentGame', StateService] },
+    { provide: 'opponent2', useFactory: opponent2PlayerFactory, deps: [TableService, 'opponentGame', StateService] }
   ],
   bootstrap: [AppComponent]
 })

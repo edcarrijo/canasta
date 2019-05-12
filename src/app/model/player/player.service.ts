@@ -13,6 +13,6 @@ export abstract class PlayerService{
     abstract drawCard(card: Card);
     abstract discard(card: Card);
     abstract addRedThree(card: Card);
-    abstract drawDiscard();
-    abstract addSequence(cardList: Card[], sequenceIndex?: number, cardIndex?: number);
+    abstract pickUpDiscardPile();
+    abstract addMeld(cardList: Card[], meldIndex?: number, cardIndex?: number);
 }

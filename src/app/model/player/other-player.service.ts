@@ -1,11 +1,12 @@
 import { PlayerService } from './player.service';
 import { GameService } from '../game.service';
 import { Card } from '../card';
-import { Board } from '../state/board';
+import { Table } from '../state/table';
 import { Player } from '../state/player';
+import { TableService } from '../table.service';
 
 export class OtherPlayerService extends PlayerService{
-    constructor(game: GameService, private player: Player, private board: Board){
+    constructor(private tableService: TableService, game: GameService, private player: Player){
         super(game);
     }
 
@@ -15,11 +16,11 @@ export class OtherPlayerService extends PlayerService{
 
     drawCard(card: Card) {
         this.player.handCount++;
-        this.board.maindDeckCount--;
+        this.tableService.removeCardFromMaindDeck();
     }    
     discard(card: Card) {
         this.player.handCount--;
-        this.board.discardStack.push(card);
+        this.tableService.addCardToDiscardPile(card);
     }
 
     addRedThree(card: Card) {
@@ -27,12 +28,11 @@ export class OtherPlayerService extends PlayerService{
         this._game.addRedThree(card);
     }
 
-    drawDiscard(){
-        this.player.handCount += this.board.discardStack.length;
-        this.board.discardStack = [];
+    pickUpDiscardPile(){
+        this.player.handCount += this.tableService.pickUpDiscardPile().length;
     }
 
-    addSequence(cardList: Card[], sequenceIndex?: number, cardIndex?: number) {
-        this._game.addSequence(cardList, sequenceIndex, cardIndex);
+    addMeld(cardList: Card[], meldIndex?: number, cardIndex?: number) {
+        this._game.addMeld(cardList, meldIndex, cardIndex);
     }
 }

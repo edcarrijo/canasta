@@ -38,10 +38,10 @@ export class AppComponent implements OnInit {
     this.state.registerState();
   }
   checkLastDiscard(){
-    if(this.state.board.discardStack.length == 0)
+    if(this.state.play.table.discardPile.length == 0)
       this.lastDiscard = null;
     else
-      this.lastDiscard = this.state.board.discardStack[this.state.board.discardStack.length - 1];
+      this.lastDiscard = this.state.play.table.discardPile[this.state.play.table.discardPile.length - 1];
   }
   undo(){
     this.state.undo();
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
   hideMyHandSwitch(){
     this.hideMyHand = !this.hideMyHand;
   }
-  addSequenceCard(cardIndex, sequenceIndex){
-    this.meAction.open(sequenceIndex, cardIndex);
+  addMeldCard(cardIndex, meldIndex){
+    this.meAction.open(meldIndex, cardIndex);
   }
 }

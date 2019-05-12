@@ -22,7 +22,7 @@ export class PlayerActionComponent implements OnInit {
   desactiveAction: boolean;
 
   private cardIndex: number;
-  private sequenceIndex: number;
+  private meldIndex: number;
   
   currentAction = {
     type: Action.DRAW,
@@ -39,16 +39,16 @@ export class PlayerActionComponent implements OnInit {
 
   isCardSelectionNeeded():boolean{
     return this.currentAction.type == Action.ADD_RED_THREE || 
-           this.currentAction.type == Action.SEQUENCE ||
+           this.currentAction.type == Action.MELD ||
            this.currentAction.type == Action.DISCARD ||
            (this.currentAction.type == Action.DRAW && this.player.getMustShowHandAction());
   }
 
-  open(sequenceIndex?: number, cardIndex?: number){
-    this.sequenceIndex = sequenceIndex;
+  open(meldIndex?: number, cardIndex?: number){
+    this.meldIndex = meldIndex;
     this.cardIndex = cardIndex;
-    if(sequenceIndex != undefined && cardIndex != undefined){
-      this.currentAction.type = Action.SEQUENCE;
+    if(meldIndex != undefined && cardIndex != undefined){
+      this.currentAction.type = Action.MELD;
       this.desactiveAction = true;
     }else{
       this.desactiveAction = false;
@@ -76,11 +76,11 @@ export class PlayerActionComponent implements OnInit {
       case Action.ADD_RED_THREE:
         this.player.addRedThree(this.getFirstSelectedCard(cardActionList));
         break;
-      case Action.DRAW_DISCARD:
-        this.player.drawDiscard();
+      case Action.PICK_UP_DISCARD:
+        this.player.pickUpDiscardPile();
         break;
-      case Action.SEQUENCE:
-        this.player.addSequence(cardActionList, this.sequenceIndex, this.cardIndex);
+      case Action.MELD:
+        this.player.addMeld(cardActionList, this.meldIndex, this.cardIndex);
         break;
     }
 
@@ -114,7 +114,7 @@ export class PlayerActionComponent implements OnInit {
   }
 
   mustShowMyHandAction():boolean{
-    return (this.currentAction.type == Action.SEQUENCE 
+    return (this.currentAction.type == Action.MELD 
         || this.currentAction.type == Action.DISCARD 
         || this.currentAction.type == Action.ADD_RED_THREE)
         && this.player.getMustShowHandAction();

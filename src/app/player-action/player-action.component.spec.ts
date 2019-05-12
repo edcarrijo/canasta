@@ -31,8 +31,8 @@ describe('PlayerActionComponent with card hand selection', () => {
       'drawCard':null,
       'addRedThree':null,
       'discard':null,
-      'drawDiscard':null,
-      'addSequence':null
+      'pickUpDiscardPile':null,
+      'addMeld':null
     });
     
     component.player = player;
@@ -126,32 +126,32 @@ describe('PlayerActionComponent with card hand selection', () => {
     }); 
   });
 
-  it('should not display any card selection for draw discard action', () => {
+  it('should not display any card selection for pick up discard action', () => {
     fixture.whenStable().then(() => {
-      testNoCardSelectionDisplay(Action.DRAW_DISCARD , fixture, component);
+      testNoCardSelectionDisplay(Action.PICK_UP_DISCARD , fixture, component);
     });
   });
 
-  it('should call draw discard action', () => {
+  it('should call pick up discard action', () => {
     fixture.whenStable().then(() => {
-      changeAction(fixture, Action.DRAW_DISCARD, component);
+      changeAction(fixture, Action.PICK_UP_DISCARD, component);
   
       const btnDoAction: HTMLButtonElement = fixture.nativeElement.querySelector('#do-action-button');
       btnDoAction.click(); 
 
-      expect(player.drawDiscard).toHaveBeenCalled();
+      expect(player.pickUpDiscardPile).toHaveBeenCalled();
     }); 
   });
 
-  it('should display hand selection for begin sequence action', () => {
+  it('should display hand selection for begin meld action', () => {
     fixture.whenStable().then(() => {
-      testHandDisplay(Action.SEQUENCE , fixture, component);
+      testHandDisplay(Action.MELD , fixture, component);
     });
   });
 
-  it('should call add sequence action with selecteds cards', () => {
+  it('should call add meld action with selecteds cards', () => {
     fixture.whenStable().then(() => {
-      changeAction(fixture, Action.SEQUENCE, component);
+      changeAction(fixture, Action.MELD, component);
   
       const shownCards = fixture.nativeElement.querySelectorAll('canasta-card');
       shownCards[0].click(); //four of hearts of my hand
@@ -161,7 +161,7 @@ describe('PlayerActionComponent with card hand selection', () => {
       const btnDoAction: HTMLButtonElement = fixture.nativeElement.querySelector('#do-action-button');
       btnDoAction.click(); 
 
-      expect(player.addSequence).toHaveBeenCalledWith(jasmine.arrayContaining(
+      expect(player.addMeld).toHaveBeenCalledWith(jasmine.arrayContaining(
         [
           jasmine.objectContaining({ value: CardValue.FOUR, suit: CardSuit.HEART }),
           jasmine.objectContaining({ value: CardValue.FIVE, suit: CardSuit.HEART }),
@@ -195,8 +195,8 @@ describe('PlayerActionComponent without card hand selection', () => {
       'drawCard':null,
       'addRedThree':null,
       'discard':null,
-      'drawDiscard':null,
-      'addSequence':null
+      'pickUpDiscardPile':null,
+      'addMeld':null
     });
     
     component.player = player;
@@ -275,15 +275,15 @@ describe('PlayerActionComponent without card hand selection', () => {
   });
 
 
-  it('should display hand selection for begin sequence action', () => {
+  it('should display hand selection for begin meld action', () => {
     fixture.whenStable().then(() => {
-      testCardSelectionDisplay(Action.SEQUENCE , fixture, component);
+      testCardSelectionDisplay(Action.MELD , fixture, component);
     });
   });
 
-  it('should call add sequence action with selecteds cards', () => {
+  it('should call add meld action with selecteds cards', () => {
     fixture.whenStable().then(() => {
-      changeAction(fixture, Action.SEQUENCE, component);
+      changeAction(fixture, Action.MELD, component);
       
       fixture.whenStable().then(() => {
         selectCard(fixture, component, CardValue.ACE, CardSuit.SPADE);
@@ -291,7 +291,7 @@ describe('PlayerActionComponent without card hand selection', () => {
         const btnDoAction: HTMLButtonElement = fixture.nativeElement.querySelector('#do-action-button');
         btnDoAction.click(); 
   
-        expect(player.addSequence).toHaveBeenCalledWith(jasmine.arrayContaining(
+        expect(player.addMeld).toHaveBeenCalledWith(jasmine.arrayContaining(
           [
             jasmine.objectContaining({ value: CardValue.ACE, suit: CardSuit.SPADE })
           ]
@@ -305,7 +305,7 @@ describe('PlayerActionComponent without card hand selection', () => {
 function selectCard(fixture: ComponentFixture<PlayerActionComponent>, component: PlayerActionComponent, 
   cardValue: CardValue, cardSuit: CardSuit) {
   
-  const valueButton: HTMLButtonElement = fixture.nativeElement.querySelector(`#btnValue${cardValue.importance}`);
+  const valueButton: HTMLButtonElement = fixture.nativeElement.querySelector(`#btnValue${cardValue.rank}`);
   valueButton.click();
   expect(component.currentAction.value).toBe(cardValue);
 

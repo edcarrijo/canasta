@@ -1,15 +1,16 @@
 import { Injectable } from "@angular/core";
-import { Board } from './board';
+import { Table } from './table';
 import { Game } from './game';
 import { UndoHistory } from './undo-history';
 import { Player } from './player';
+import { Play } from './play';
 
 @Injectable()
 export class StateService{
 
 
-    public board: Board;
-    private undoHistory: UndoHistory<Board>;
+    public play: Play;
+    private undoHistory: UndoHistory<Play>;
 
     
     constructor(){
@@ -17,56 +18,60 @@ export class StateService{
     }
 
     public initialize(){
-        this.board = new Board();
+        this.play = new Play();
        
-        this.undoHistory = new UndoHistory<Board>(this.board);
+        this.undoHistory = new UndoHistory<Play>(this.play);
     }
 
+    public createTable():Table{
+        this.play.table = new Table();
+        return this.play.table;
+    }
     public createMyGame():Game{
-        this.board.myGame = new Game();
-        return this.board.myGame;
+        this.play.table.myGame = new Game();
+        return this.play.table.myGame;
     }
     public createOpponentGame():Game{
-        this.board.opponentGame = new Game();
-        return this.board.opponentGame;
+        this.play.table.opponentGame = new Game();
+        return this.play.table.opponentGame;
     }
     public createMePlayer():Player{
-        this.board.me = new Player();
-        return this.board.me;
+        this.play.me = new Player();
+        return this.play.me;
     }
     public createPartnerPlayer():Player{
-        this.board.partner = new Player();
-        return this.board.partner;
+        this.play.partner = new Player();
+        return this.play.partner;
     }
     public createOponent1Player():Player{
-        this.board.opponent1 = new Player();
-        return this.board.opponent1;
+        this.play.opponent1 = new Player();
+        return this.play.opponent1;
     }
     public createOponent2Player():Player{
-        this.board.opponent2 = new Player();
-        return this.board.opponent2;
+        this.play.opponent2 = new Player();
+        return this.play.opponent2;
     }
 
     public registerState(){
-        this.undoHistory.do(this.board);
+        this.undoHistory.do(this.play);
     }
     public undo(){
         const previousState = this.undoHistory.undo();
         this.restoreState(previousState);    
     }
 
-    private restoreState(previousState: Board) {
-        this.board.maindDeckCount = previousState.maindDeckCount;
-        this.board.discardStack = previousState.discardStack;
-        this.board.sideDeck1Avaible = previousState.sideDeck1Avaible;
-        this.board.sideDeck2Avaible = previousState.sideDeck2Avaible;
-        this.board.myGame.redThrees = previousState.myGame.redThrees;
-        this.board.myGame.sequences = previousState.myGame.sequences;
-        this.board.opponentGame.redThrees = previousState.opponentGame.redThrees;
-        this.board.opponentGame.sequences = previousState.opponentGame.sequences;
-        this.board.me.hand = previousState.me.hand;
-        this.board.partner.handCount = previousState.partner.handCount;
-        this.board.opponent1.handCount = previousState.opponent1.handCount;
-        this.board.opponent2.handCount = previousState.opponent2.handCount;
+    private restoreState(previousState: Play) {
+        this.play.table.maindDeckCount = previousState.table.maindDeckCount;
+        this.play.table.discardPile = previousState.table.discardPile;
+        this.play.table.sideDeck1Avaible = previousState.table.sideDeck1Avaible;
+        this.play.table.sideDeck2Avaible = previousState.table.sideDeck2Avaible;
+        this.play.table.myGame.redThrees = previousState.table.myGame.redThrees;
+        this.play.table.myGame.melds = previousState.table.myGame.melds;
+        this.play.table.opponentGame.redThrees = previousState.table.opponentGame.redThrees;
+        this.play.table.opponentGame.melds = previousState.table.opponentGame.melds;
+        this.play.me.hand = previousState.me.hand;
+        this.play.partner.handCount = previousState.partner.handCount;
+        this.play.opponent1.handCount = previousState.opponent1.handCount;
+        this.play.opponent2.handCount = previousState.opponent2.handCount;
     }
 }

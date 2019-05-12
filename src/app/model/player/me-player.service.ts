@@ -3,11 +3,12 @@ import { Card } from '../card';
 import { GameService } from '../game.service';
 import { Injectable, Inject } from '@angular/core';
 import { Player } from '../state/player';
-import { Board } from '../state/board';
+import { Table } from '../state/table';
+import { TableService } from '../table.service';
 
 @Injectable()
 export class MePlayerService extends PlayerService{
-    constructor(@Inject('myGame') game: GameService, private player: Player, private board: Board){
+    constructor(private tableService: TableService, @Inject('myGame') game: GameService, private player: Player){
         super(game);
     }
 
@@ -16,21 +17,20 @@ export class MePlayerService extends PlayerService{
     }
 
     drawCard(card: Card) {
+        this.tableService.removeCardFromMaindDeck();
         this.player.hand.push(card);
-        this.board.maindDeckCount--;
     }
 
     discard(card: Card) {
         var myHandCard = this.removeCardFromMyHand(card);
-        this.board.discardStack.push(myHandCard);
+        this.tableService.addCardToDiscardPile(myHandCard);
     }
     addRedThree(card: Card) {
         this._game.addRedThree(card);
         this.removeCardFromMyHand(card);
     }
-    drawDiscard(){
-        this.player.hand.push(...this.board.discardStack);
-        this.board.discardStack = [];
+    pickUpDiscardPile(){
+        this.player.hand.push(...this.tableService.pickUpDiscardPile());
     }
 
     private removeCardFromMyHand(card: Card): Card{
@@ -43,22 +43,22 @@ export class MePlayerService extends PlayerService{
 
     private findCardInMyHand(card: Card) {
         var myHandCard = this.player.hand
-            .find(c => c.value.importance == card.value.importance
+            .find(c => c.value.rank == card.value.rank
                 && c.suit.id == card.suit.id);
         if (!myHandCard)
             throw new Error('Card not found');
         return myHandCard;
     }
 
-    addSequence(cardList: Card[], sequenceIndex?: number, cardIndex?: number) {
-        this.validateSequence(cardList);
-        this._game.addSequence(cardList, sequenceIndex, cardIndex);
+    addMeld(cardList: Card[], meldIndex?: number, cardIndex?: number) {
+        this.validateMeld(cardList);
+        this._game.addMeld(cardList, meldIndex, cardIndex);
         cardList.forEach(card => this.removeCardFromMyHand(card));
     }
 
-    private validateSequence(cardList: Card[]) {
+    private validateMeld(cardList: Card[]) {
         if (!cardList.length)
-            throw new Error('Sequence empty');
+            throw new Error('Meld empty');
         cardList.forEach(card => this.findCardInMyHand(card));
     }
 }

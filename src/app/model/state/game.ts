@@ -1,7 +1,7 @@
-import { Card, Sequence } from '..';
+import { Card, Meld } from '..';
 
 export class Game{
     constructor(){}
     public redThrees: Card[] = [];
-    public sequences: Sequence[] = [];
+    public melds: Meld[] = [];
 }

@@ -18,22 +18,22 @@ export class GameService{
     }
 
     private isRedThree(card: Card){
-        return card.value.importance == 3 && (card.suit.id == CardSuit.HEART.id || card.suit.id == CardSuit.DIAMOND.id);
+        return card.value.rank == 3 && (card.suit.id == CardSuit.HEART.id || card.suit.id == CardSuit.DIAMOND.id);
     }
 
-    addSequence(cardList: Card[], sequenceIndex?: number, cardIndex?: number){
-        if(sequenceIndex != undefined && cardIndex != undefined){
-            let sequence = JSON.parse(JSON.stringify(this.game.sequences[sequenceIndex]));
-            sequence.cards.splice(cardIndex, 0, ...cardList);
-            this.game.sequences[sequenceIndex] = sequence;
+    addMeld(cardList: Card[], meldIndex?: number, cardIndex?: number){
+        if(meldIndex != undefined && cardIndex != undefined){
+            let meld = JSON.parse(JSON.stringify(this.game.melds[meldIndex]));
+            meld.cards.splice(cardIndex, 0, ...cardList);
+            this.game.melds[meldIndex] = meld;
         }
         else{
-            this.game.sequences.push(<Sequence>{ cards: cardList});
+            this.game.melds.push(<Meld>{ cards: cardList});
         }
     }
 }
 
-export class Sequence{
+export class Meld{
     public cards: Card[];
 
     public constructor(){

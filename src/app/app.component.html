@@ -24,31 +24,31 @@
           <button type="button" class="btn btn-light d-block action-button" (click)="opponent1Action.open()" title="Opponent 1">
                 <fa-icon [icon]="['fas', 'user-ninja']"></fa-icon>
           </button> 
-          <canasta-card-back [count]="state.board.opponent1.handCount" ></canasta-card-back>
+          <canasta-card-back [count]="state.play.opponent1.handCount" ></canasta-card-back>
       </div>
       <div [ngClass]="{'col-2 order-2': !inverted, 'col order-1': inverted}">
           <button type="button" class="btn btn-light d-block action-button" (click)="partnerAction.open()" title="Partner">
                 <fa-icon [icon]="['far', 'grin-beam-sweat']"></fa-icon>
           </button> 
-          <canasta-card-back [count]="state.board.partner.handCount"></canasta-card-back>
+          <canasta-card-back [count]="state.play.partner.handCount"></canasta-card-back>
       </div>
     </div>
     <div class="game-table">
       <div class="row">
           <div class="col-2">
               <p>Red threes</p>
-              <canasta-card *ngFor="let card of state.board.opponentGame.redThrees" [card]="card"></canasta-card>
+              <canasta-card *ngFor="let card of state.play.table.opponentGame.redThrees" [card]="card"></canasta-card>
           </div>
           <div class="col">
               <p>Oponnent's table</p>
-              <canasta-card-sequence *ngFor="let sequence of state.board.opponentGame.sequences" [sequence]="sequence"></canasta-card-sequence>
+              <canasta-card-meld *ngFor="let meld of state.play.table.opponentGame.melds" [meld]="meld"></canasta-card-meld>
           </div>
       </div>
       <div class="row neutral-zone">
           <div class="col">
               <p>Side deck</p>
-              <canasta-card-back *ngIf="state.board.sideDeck1Avaible"></canasta-card-back>
-              <canasta-card-back *ngIf="state.board.sideDeck2Avaible"></canasta-card-back>
+              <canasta-card-back *ngIf="state.play.table.sideDeck1Avaible"></canasta-card-back>
+              <canasta-card-back *ngIf="state.play.table.sideDeck2Avaible"></canasta-card-back>
           </div>
           <div class="col">
               <p>Discard</p>
@@ -56,19 +56,19 @@
           </div>
           <div class="col">
               <p>Main deck</p>
-              <canasta-card-back [count]="state.board.maindDeckCount"></canasta-card-back>
+              <canasta-card-back [count]="state.play.table.maindDeckCount"></canasta-card-back>
           </div>
       </div>
       <div class="row">
           <div class="col-2">
               <p>Red threes</p>
-              <canasta-card *ngFor="let card of state.board.myGame.redThrees" [card]="card"></canasta-card>
+              <canasta-card *ngFor="let card of state.play.table.myGame.redThrees" [card]="card"></canasta-card>
           </div>
           <div class="col">
               <p>My table</p>
-              <canasta-card-sequence *ngFor="let sequence of state.board.myGame.sequences; let i = index" 
-                [sequence]="sequence"
-                (addCardClick)="addSequenceCard($event, i)"></canasta-card-sequence>
+              <canasta-card-meld *ngFor="let meld of state.play.table.myGame.melds; let i = index" 
+                [meld]="meld"
+                (addCardClick)="addMeldCard($event, i)"></canasta-card-meld>
           </div>
       </div>
     </div>
@@ -80,7 +80,7 @@
             [ngClass]="{'float-right': inverted}">
                 <fa-icon [icon]="['far', 'grin-beam']"></fa-icon>
         </button> 
-        <div class="d-inline" *ngFor="let card of state.board.me.hand">
+        <div class="d-inline" *ngFor="let card of state.play.me.hand">
             <canasta-card *ngIf="!hideMyHand" [card]="card" [ngClass]="{'float-right': inverted}"></canasta-card>
             <canasta-card-back *ngIf="hideMyHand"></canasta-card-back>
         </div>
@@ -90,17 +90,17 @@
           <button type="button" class="btn btn-light d-block action-button" (click)="opponent2Action.open()" title="Opponent 2">
             <fa-icon [icon]="['fas', 'user-ninja']"></fa-icon>
           </button> 
-          <canasta-card-back [count]="state.board.opponent2.handCount"></canasta-card-back>
+          <canasta-card-back [count]="state.play.opponent2.handCount"></canasta-card-back>
       </div>
     </div>
     </div>
 </main>
 
-<canasta-player-action [player]="me" [hand]="state.board.me.hand" modalId="meAction" (actionDone)="actionDone($event)" #meAction></canasta-player-action>
-<canasta-player-action [player]="partner" [hand]="state.board.partner.hand" modalId="partnerAction" (actionDone)="actionDone($event)" #partnerAction></canasta-player-action>
-<canasta-player-action [player]="opponent1" [hand]="state.board.opponent1.hand" modalId="opponent1Action" (actionDone)="actionDone($event)" #opponent1Action></canasta-player-action>
-<canasta-player-action [player]="opponent2" [hand]="state.board.opponent2.hand" modalId="opponent2Action" (actionDone)="actionDone($event)" #opponent2Action></canasta-player-action>
+<canasta-player-action [player]="me" [hand]="state.play.me.hand" modalId="meAction" (actionDone)="actionDone($event)" #meAction></canasta-player-action>
+<canasta-player-action [player]="partner" [hand]="state.play.partner.hand" modalId="partnerAction" (actionDone)="actionDone($event)" #partnerAction></canasta-player-action>
+<canasta-player-action [player]="opponent1" [hand]="state.play.opponent1.hand" modalId="opponent1Action" (actionDone)="actionDone($event)" #opponent1Action></canasta-player-action>
+<canasta-player-action [player]="opponent2" [hand]="state.play.opponent2.hand" modalId="opponent2Action" (actionDone)="actionDone($event)" #opponent2Action></canasta-player-action>
 
 <pre hidden>
-  {{ state.board | json }}
+  {{ state.table | json }}
 </pre>

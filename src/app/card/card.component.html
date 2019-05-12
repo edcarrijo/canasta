@@ -5,10 +5,10 @@
           <span class="suit-corner">{{ card.suit.symbol }}</span>
       </div>
       
-      <span *ngIf="card.value.importance > 10" class="face middle_center">
+      <span *ngIf="card.value.rank > 10" class="face middle_center">
           <img [src]="getImagePath()">
       </span>
-      <div *ngIf="card.value.importance <= 10">
+      <div *ngIf="card.value.rank <= 10">
         <span class="suit top_left">{{ card.suit.symbol }}</span>
         <span class="suit top_right">{{ card.suit.symbol }}</span>
         <span class="suit top_center">{{ card.suit.symbol }}</span>
