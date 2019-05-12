@@ -1,8 +1,9 @@
 import { Card } from '../card';
-import { Board } from './board';
 
 export class Player{
+    static HAND_COUNT = 11;
+
     constructor(){ }
     public hand: Card[] = [];
-    public handCount: number = Board.HAND_COUNT;
+    public handCount: number = Player.HAND_COUNT;
 }

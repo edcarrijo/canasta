@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Sequence } from '../model/game.service';
 import { CardSelectionModel } from '../card-selection/card-selection.model';
+
 
 @Component({
   selector: 'canasta-card-sequence',
@@ -10,6 +11,7 @@ export class CardSequenceComponent implements OnInit {
 
   constructor() { }
   @Input() sequence: Sequence;
+  @Output() addCardClick = new EventEmitter<number>();
   cardSelectionSource: CardSelectionModel[];
 
   ngOnInit() {
@@ -30,6 +32,19 @@ export class CardSequenceComponent implements OnInit {
     this.move(this.cardSelectionSource, card, 1);
   };
 
+  addCardLeft(){
+    let card = this.cardSelectionSource.find(card => card.selected);
+    let index = this.cardSelectionSource.indexOf(card);
+    this.addCardClick.emit(index);
+  }
+
+  addCardRight(){
+    let card = this.cardSelectionSource.find(card => card.selected);
+    let index = this.cardSelectionSource.indexOf(card);
+    index++;
+    this.addCardClick.emit(index);
+  }
+
   private move(array, element, delta) {
     var index = array.indexOf(element);
     var newIndex = index + delta;
@@ -37,5 +52,4 @@ export class CardSequenceComponent implements OnInit {
     var indexes = [index, newIndex].sort(); //Sort the indixes
     array.splice(indexes[0], 2, array[indexes[1]], array[indexes[0]]); //Replace from lowest index, two elements, reverting the order
   };
-
 }

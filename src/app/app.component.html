@@ -66,7 +66,9 @@
           </div>
           <div class="col">
               <p>My table</p>
-              <canasta-card-sequence *ngFor="let sequence of state.board.myGame.sequences" [sequence]="sequence"></canasta-card-sequence>
+              <canasta-card-sequence *ngFor="let sequence of state.board.myGame.sequences; let i = index" 
+                [sequence]="sequence"
+                (addCardClick)="addSequenceCard($event, i)"></canasta-card-sequence>
           </div>
       </div>
     </div>

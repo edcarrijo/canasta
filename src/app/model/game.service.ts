@@ -21,8 +21,15 @@ export class GameService{
         return card.value.importance == 3 && (card.suit.id == CardSuit.HEART.id || card.suit.id == CardSuit.DIAMOND.id);
     }
 
-    addSequence(cardList: Card[]){
-        this.game.sequences.push(<Sequence>{ cards: cardList});
+    addSequence(cardList: Card[], sequenceIndex?: number, cardIndex?: number){
+        if(sequenceIndex != undefined && cardIndex != undefined){
+            let sequence = JSON.parse(JSON.stringify(this.game.sequences[sequenceIndex]));
+            sequence.cards.splice(cardIndex, 0, ...cardList);
+            this.game.sequences[sequenceIndex] = sequence;
+        }
+        else{
+            this.game.sequences.push(<Sequence>{ cards: cardList});
+        }
     }
 }
 

@@ -3,7 +3,7 @@ export class Action{
     static ADD_RED_THREE = 'Add red three';
     static DISCARD = 'Discard';
     static DRAW_DISCARD = 'Draw discard';
-    static SEQUENCE = 'Begin sequence';
+    static SEQUENCE = 'Add sequence';
     protected constructor(){ }
 
     static getAll(): string[]{

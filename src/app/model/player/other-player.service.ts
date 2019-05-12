@@ -32,7 +32,7 @@ export class OtherPlayerService extends PlayerService{
         this.board.discardStack = [];
     }
 
-    addSequence(cardList: Card[]) {
-        this._game.addSequence(cardList);
+    addSequence(cardList: Card[], sequenceIndex?: number, cardIndex?: number) {
+        this._game.addSequence(cardList, sequenceIndex, cardIndex);
     }
 }

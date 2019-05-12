@@ -18,9 +18,11 @@
                               *ngFor="let action of actionList; let i = index"
                               (click)="selectAction(action)"
                               id="{{ 'btnAction' + i }}"
-                              [ngClass]="{ 'active': currentAction.type == action}">{{action}}</button>
+                              [ngClass]="{ 'active': currentAction.type == action}"
+                              [hidden]="desactiveAction">{{action}}</button>
                         </div>
                     </div>
+                    <span *ngIf="desactiveAction">{{ currentAction.type }}</span>
                 </div>
             </div>
             <div *ngIf="isCardSelectionNeeded() && !mustShowMyHandAction()" id="newCardSelectionSection2">

@@ -50,9 +50,9 @@ export class MePlayerService extends PlayerService{
         return myHandCard;
     }
 
-    addSequence(cardList: Card[]) {
+    addSequence(cardList: Card[], sequenceIndex?: number, cardIndex?: number) {
         this.validateSequence(cardList);
-        this._game.addSequence(cardList);
+        this._game.addSequence(cardList, sequenceIndex, cardIndex);
         cardList.forEach(card => this.removeCardFromMyHand(card));
     }
 

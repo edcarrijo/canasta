@@ -5,6 +5,7 @@ import { CardSelectionModel } from './card-selection/card-selection.model';
 import { MePlayerService } from './model/player/me-player.service';
 import { PlayerService } from './model/player/player.service';
 import { StateService } from './model/state/state.service';
+import { PlayerActionComponent } from './player-action/player-action.component';
 
 declare var $: any;
 
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
   inverted = false;
   hideMyHand = false;
 
+  @ViewChild('meAction') meAction: PlayerActionComponent;
 
   constructor(
     public state: StateService,
@@ -50,5 +52,8 @@ export class AppComponent implements OnInit {
   }
   hideMyHandSwitch(){
     this.hideMyHand = !this.hideMyHand;
+  }
+  addSequenceCard(cardIndex, sequenceIndex){
+    this.meAction.open(sequenceIndex, cardIndex);
   }
 }

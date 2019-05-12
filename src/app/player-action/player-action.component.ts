@@ -19,6 +19,10 @@ export class PlayerActionComponent implements OnInit {
   cardSuitList: CardSuit[];
   actionList: string[];
   handSelection: CardSelectionModel[] = [];
+  desactiveAction: boolean;
+
+  private cardIndex: number;
+  private sequenceIndex: number;
   
   currentAction = {
     type: Action.DRAW,
@@ -40,7 +44,16 @@ export class PlayerActionComponent implements OnInit {
            (this.currentAction.type == Action.DRAW && this.player.getMustShowHandAction());
   }
 
-  open(){
+  open(sequenceIndex?: number, cardIndex?: number){
+    this.sequenceIndex = sequenceIndex;
+    this.cardIndex = cardIndex;
+    if(sequenceIndex != undefined && cardIndex != undefined){
+      this.currentAction.type = Action.SEQUENCE;
+      this.desactiveAction = true;
+    }else{
+      this.desactiveAction = false;
+    }
+
     this.setHandSelection();
     $(`#${this.modalId}`).modal('show');
   }
@@ -67,7 +80,7 @@ export class PlayerActionComponent implements OnInit {
         this.player.drawDiscard();
         break;
       case Action.SEQUENCE:
-        this.player.addSequence(cardActionList);
+        this.player.addSequence(cardActionList, this.sequenceIndex, this.cardIndex);
         break;
     }
 
