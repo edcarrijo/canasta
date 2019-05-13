@@ -132,4 +132,15 @@ export class PlayerActionComponent implements OnInit {
     this.currentAction.type = action;
   }
 
+  selectCard(suit: CardSuit, value: CardValue){
+    this.currentAction.suit = suit;
+    this.currentAction.value = value;
+  }
+
+  selectCardAndDoAction(suit: CardSuit, value: CardValue){
+    this.selectCard(suit, value);
+    this.doAction();
+  }
+
+
 }
