@@ -61,4 +61,10 @@ export class MePlayerService extends PlayerService{
             throw new Error('Meld empty');
         cardList.forEach(card => this.findCardInMyHand(card));
     }
+
+    goOut(){
+        if(this.player.hand.length != 0)
+            throw new Error('You cannot go out with cards in your hand');
+        this._game.goOut();
+    }
 }

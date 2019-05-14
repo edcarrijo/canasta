@@ -15,4 +15,5 @@ export abstract class PlayerService{
     abstract addRedThree(card: Card);
     abstract pickUpDiscardPile();
     abstract addMeld(cardList: Card[], meldIndex?: number, cardIndex?: number);
+    abstract goOut();
 }

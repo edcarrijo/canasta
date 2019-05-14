@@ -61,8 +61,8 @@
           <div class="d-flex flex-row justify-content-between">
             <div>
                 <p>{{ 'canasta.sideDeck' | translate }}</p>
-                <canasta-card-back *ngIf="state.play.table.sideDeck1Avaible"></canasta-card-back>
-                <canasta-card-back *ngIf="state.play.table.sideDeck2Avaible"></canasta-card-back>
+                <canasta-card-back *ngIf="!state.play.table.myGame.goneOutOnce"></canasta-card-back>
+                <canasta-card-back *ngIf="!state.play.table.opponentGame.goneOutOnce"></canasta-card-back>
             </div>
             <div>
                 <p>{{ 'canasta.discardPile' | translate }}</p>

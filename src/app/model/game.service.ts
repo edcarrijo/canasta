@@ -8,8 +8,10 @@ import { Game } from './state/game';
 export class GameService{
 
     private CARD_SCORE = 10;
+    private RED_THREE_SCORE = 100;
     private CANASTA_SCORE = 100;
     private CLEAN_CANASTA_SCORE = 200;
+    private FINAL_GOOUT_SCORE = 100;
 
     constructor(public game: Game){
     }
@@ -19,10 +21,24 @@ export class GameService{
             throw new Error('The card is not a red three');
         }
         this.game.redThrees.push(card);
+        this.game.currentScore = this.calculateTableScore();
     }
 
     private isRedThree(card: Card){
         return card.value.rank == 3 && (card.suit.id == CardSuit.HEART.id || card.suit.id == CardSuit.DIAMOND.id);
+    }
+
+    goOut():boolean{
+        let endGame: boolean;
+        if(this.game.goneOutOnce){
+            this.game.currentScore += this.FINAL_GOOUT_SCORE;
+            endGame = true;
+        }
+        else{
+            this.game.goneOutOnce = true;
+            endGame = false;
+        } 
+        return endGame;
     }
 
     addMeld(cardList: Card[], meldIndex?: number, cardIndex?: number){
@@ -37,8 +53,8 @@ export class GameService{
         this.game.currentScore = this.calculateTableScore();
     }
 
-    calculateTableScore():number{
-        let totalCards = 0;
+    private calculateTableScore():number{
+        let totalCards = this.game.redThrees.length;
         let canastaCount = 0;
         let cleanCanastaCount = 0;
         this.game.melds.forEach(meld => {
@@ -51,9 +67,12 @@ export class GameService{
                     cleanCanastaCount++;
             }
         });
+
+        let redThreesScoreModifier = (canastaCount + cleanCanastaCount) > 0 ? 1 : -1;
         return (totalCards * this.CARD_SCORE) + 
             (canastaCount * this.CANASTA_SCORE) + 
-            (cleanCanastaCount * this.CLEAN_CANASTA_SCORE);
+            (cleanCanastaCount * this.CLEAN_CANASTA_SCORE) +
+            (this.game.redThrees.length * this.RED_THREE_SCORE * redThreesScoreModifier);
     }
 }
 

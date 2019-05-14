@@ -16,6 +16,7 @@
             "discard": "Discard",
             "pickUpDiscard": "Pick up discard",
             "addMeld": "Add meld",
+            "goOut": "Go out",
             "emptyHand": "Empty hand",
             "noCardSelection": "No card selection needed",
             "doAction": "Do action",

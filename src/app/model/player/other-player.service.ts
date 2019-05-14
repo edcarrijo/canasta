@@ -35,4 +35,12 @@ export class OtherPlayerService extends PlayerService{
     addMeld(cardList: Card[], meldIndex?: number, cardIndex?: number) {
         this._game.addMeld(cardList, meldIndex, cardIndex);
     }
+
+    goOut(){
+        if(this.player.handCount != 0)
+            throw new Error('You cannot go out with cards in your hand');
+        var endGame = this._game.goOut();
+        if(!endGame)
+            this.player.handCount = Player.HAND_COUNT;
+    }
 }

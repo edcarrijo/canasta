@@ -5,4 +5,5 @@ export class Game{
     public redThrees: Card[] = [];
     public melds: Meld[] = [];
     public currentScore: number = 0;
+    public goneOutOnce: boolean;
 }

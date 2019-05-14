@@ -82,6 +82,8 @@ export class PlayerActionComponent implements OnInit {
       case Action.MELD:
         this.player.addMeld(cardActionList, this.meldIndex, this.cardIndex);
         break;
+      case Action.GOOUT:
+        this.player.goOut();
     }
 
     this.setHandSelection();

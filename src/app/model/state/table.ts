@@ -8,8 +8,6 @@ export class Table{
     static HAND_COUNT = 11;
 
     public maindDeckCount: number;
-    public sideDeck1Avaible: boolean;
-    public sideDeck2Avaible: boolean;
     public discardPile: Card[];
 
     public myGame: Game;
@@ -17,8 +15,6 @@ export class Table{
 
     constructor(){
         this.discardPile = [];
-        this.sideDeck1Avaible = true;
-        this.sideDeck2Avaible = true;
 
         var totalCardsOutsideDeck = Table.HAND_COUNT * 5;
         this.maindDeckCount = ((Table.TOTAl_DECK_CARDS * 2) - totalCardsOutsideDeck) + Table.TOTAL_EXTRA_JOKER;

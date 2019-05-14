@@ -63,12 +63,17 @@ export class StateService{
     private restoreState(previousState: Play) {
         this.play.table.maindDeckCount = previousState.table.maindDeckCount;
         this.play.table.discardPile = previousState.table.discardPile;
-        this.play.table.sideDeck1Avaible = previousState.table.sideDeck1Avaible;
-        this.play.table.sideDeck2Avaible = previousState.table.sideDeck2Avaible;
+
         this.play.table.myGame.redThrees = previousState.table.myGame.redThrees;
         this.play.table.myGame.melds = previousState.table.myGame.melds;
+        this.play.table.myGame.currentScore = previousState.table.myGame.currentScore;
+        this.play.table.myGame.goneOutOnce = previousState.table.myGame.goneOutOnce;
+
         this.play.table.opponentGame.redThrees = previousState.table.opponentGame.redThrees;
         this.play.table.opponentGame.melds = previousState.table.opponentGame.melds;
+        this.play.table.opponentGame.currentScore = previousState.table.opponentGame.currentScore;
+        this.play.table.opponentGame.goneOutOnce = previousState.table.opponentGame.goneOutOnce;
+        
         this.play.me.hand = previousState.me.hand;
         this.play.partner.handCount = previousState.partner.handCount;
         this.play.opponent1.handCount = previousState.opponent1.handCount;
