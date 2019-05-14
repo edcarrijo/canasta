@@ -1,5 +1,5 @@
 <div class="ml-4 d-inline-block">
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row" [ngClass]="{ 'canasta':  cardSelectionSource.length >= 7}">
         <canasta-card-selection [source]="cardSelectionSource" [singleSelection]="true"></canasta-card-selection>
     </div>
     
