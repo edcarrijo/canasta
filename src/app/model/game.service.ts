@@ -54,25 +54,34 @@ export class GameService{
     }
 
     private calculateTableScore():number{
-        let totalCards = this.game.redThrees.length;
-        let canastaCount = 0;
-        let cleanCanastaCount = 0;
+        let totalCards = 0;
+        let canastaScore = 0;
         this.game.melds.forEach(meld => {
             totalCards += meld.cards.length;
-            if(meld.cards.length >= 7){
-                let hasWildcard = meld.cards.some(card => card.value.rank == 2 || card.value.rank == 0);
-                if(hasWildcard)
-                    canastaCount++;
-                else
-                    cleanCanastaCount++;
-            }
+            canastaScore += this.countCanastas(meld);
         });
+        let redThreesScore = this.countRedThrees(canastaScore);
+        
+        return (totalCards * this.CARD_SCORE) + canastaScore + redThreesScore;
+    }
 
-        let redThreesScoreModifier = (canastaCount + cleanCanastaCount) > 0 ? 1 : -1;
-        return (totalCards * this.CARD_SCORE) + 
-            (canastaCount * this.CANASTA_SCORE) + 
-            (cleanCanastaCount * this.CLEAN_CANASTA_SCORE) +
-            (this.game.redThrees.length * this.RED_THREE_SCORE * redThreesScoreModifier);
+    private countCanastas(meld: Meld):number {
+        let canastaCount = 0;
+        let cleanCanastaCount = 0;
+
+        if (meld.cards.length >= 7) {
+            let hasWildcard = meld.cards.some(card => card.value.rank == 2 || card.value.rank == 0);
+            if (hasWildcard)
+                canastaCount++;
+            else
+                cleanCanastaCount++;
+        }
+        return (canastaCount * this.CANASTA_SCORE) + (cleanCanastaCount * this.CLEAN_CANASTA_SCORE);
+    }
+    private countRedThrees(canastaScore: number):number{
+        let redThreesScoreModifier = canastaScore > 0 ? 1 : -1;
+        return (this.game.redThrees.length * this.RED_THREE_SCORE * redThreesScoreModifier) + 
+               (this.game.redThrees.length * this.CARD_SCORE);
     }
 }
 
