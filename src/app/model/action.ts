@@ -1,9 +1,9 @@
 export class Action{
-    static DRAW = 'Draw';
-    static ADD_RED_THREE = 'Add red three';
-    static DISCARD = 'Discard';
-    static PICK_UP_DISCARD = 'Pick up discard';
-    static MELD = 'Add meld';
+    static DRAW = 'canasta.player-action.draw';
+    static ADD_RED_THREE = 'canasta.player-action.addRedThree';
+    static DISCARD = 'canasta.player-action.discard';
+    static PICK_UP_DISCARD = 'canasta.player-action.pickUpDiscard';
+    static MELD = 'canasta.player-action.addMeld';
     protected constructor(){ }
 
     static getAll(): string[]{

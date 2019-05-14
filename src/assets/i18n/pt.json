@@ -1,0 +1,26 @@
+{
+    "canasta":{
+        "mySide": "MINHA MESA",
+        "opponentSide": "MESA OPONENTE",
+        "discardPile": "DESCARTE",
+        "deck": "BARALHO",
+        "sideDeck": "MORTO",
+        "me": "Eu",
+        "partner": "Parceiro",
+        "opponent1": "Oponente 1",
+        "opponent2": "Oponente 2",
+        "player-action":{
+            "action": "Açāo",
+            "draw": "Comprar",
+            "addRedThree": "Adicionar 3 vermelho",
+            "discard": "Descarte",
+            "pickUpDiscard": "Comprar descarte",
+            "addMeld": "Adicionar jogo",
+            "emptyHand": "Māo vazia",
+            "noCardSelection": "Nenhuma seleçāo necessária",
+            "doAction": "Jogar",
+            "doActionClose": "Jogar e fechar",
+            "joker": "CORINGA"
+        }
+    }
+}

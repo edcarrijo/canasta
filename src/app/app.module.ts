@@ -18,6 +18,10 @@ import { faGrinBeam, faGrinBeamSweat } from '@fortawesome/free-regular-svg-icons
 import { StateService } from './model/state/state.service';
 import { TableService } from './model/table.service';
 
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+
 
 let myGameFactory = (stateService: StateService) => {
   return new GameService(stateService.createMyGame());
@@ -53,7 +57,15 @@ let opponent2PlayerFactory = (tableService, game: GameService, stateService: Sta
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })
   ],
   providers: [
     StateService,
@@ -85,4 +97,8 @@ export class AppModule {
       faChalkboardTeacher,
       faLaptop);
   }
+}
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
 }

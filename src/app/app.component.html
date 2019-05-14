@@ -2,6 +2,12 @@
     <div class="col offset-11">
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
             <div class="btn-group mr-2" role="group" aria-label="First group">
+                <button type="button" class="btn btn-secondary" (click)="usePortuguese()">
+                    PT
+                </button>
+                <button type="button" class="btn btn-secondary" (click)="useEnglish()">
+                    EN
+                </button>
                 <button type="button" class="btn btn-secondary" (click)="invertPlayersSwitch()">
                     <fa-icon [icon]="['fas', 'exchange-alt']"></fa-icon>
                 </button>
@@ -22,8 +28,8 @@
     <div class="row justify-content-md-center">
       <div [ngClass]="{'col order-1': !inverted, 'col-2 order-2': inverted}">
           <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': inverted}">
-                <button type="button" class="btn btn-light d-block action-button" (click)="openOpponent2Action()" title="Opponent 1">
-                 <fa-icon [icon]="['fas', 'user-secret']"></fa-icon>
+                <button type="button" class="btn btn-light d-block action-button" (click)="openOpponent2Action()" title="{{ 'canasta.opponent1' | translate }}">
+                    <fa-icon [icon]="['fas', 'user-secret']"></fa-icon>
                 </button> 
           </div>
           <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': inverted}">
@@ -32,7 +38,7 @@
       </div>
       <div [ngClass]="{'col-2 order-2': !inverted, 'col order-1': inverted}">
           <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': !inverted}">
-                <button type="button" class="btn btn-light d-block action-button" (click)="openPartnerAction()" title="Partner">
+                <button type="button" class="btn btn-light d-block action-button" (click)="openPartnerAction()" title="{{ 'canasta.partner' | translate }}">
                         <fa-icon [icon]="['fas', 'user-shield']"></fa-icon>
                   </button> 
           </div>
@@ -47,23 +53,23 @@
               <canasta-card *ngFor="let card of state.play.table.opponentGame.redThrees" [card]="card"></canasta-card>
           </div>
           <div class="col">
-              <p>OPPONENT SIDE</p>
+              <p>{{ 'canasta.opponentSide' | translate }}</p>
               <canasta-card-meld *ngFor="let meld of state.play.table.opponentGame.melds; let i = index" [meld]="meld" (addCardClick)="addMeldCard($event, i)"></canasta-card-meld>
           </div>
       </div>
       <div class="neutral-zone">
           <div class="d-flex flex-row justify-content-between">
             <div>
-                <p>SIDE DECK</p>
+                <p>{{ 'canasta.sideDeck' | translate }}</p>
                 <canasta-card-back *ngIf="state.play.table.sideDeck1Avaible"></canasta-card-back>
                 <canasta-card-back *ngIf="state.play.table.sideDeck2Avaible"></canasta-card-back>
             </div>
             <div>
-                <p>DISCARD</p>
+                <p>{{ 'canasta.discardPile' | translate }}</p>
                 <canasta-card *ngIf="lastDiscard" [card]="lastDiscard"></canasta-card>
             </div>
             <div>
-                <p>DECK</p>
+                <p>{{ 'canasta.deck' | translate }}</p>
                 <canasta-card-back [count]="state.play.table.maindDeckCount"></canasta-card-back>
             </div>
           </div>
@@ -73,7 +79,7 @@
               <canasta-card *ngFor="let card of state.play.table.myGame.redThrees" [card]="card"></canasta-card>
           </div>
           <div class="col">
-              <p>MY SIDE</p>
+              <p>{{ 'canasta.mySide' | translate }}</p>
               <canasta-card-meld *ngFor="let meld of state.play.table.myGame.melds; let i = index" 
                 [meld]="meld"
                 (addCardClick)="addMeldCard($event, i)"></canasta-card-meld>
@@ -85,7 +91,7 @@
       <div class="col" [ngClass]="{'order-1': !inverted, 'order-2': inverted}">
           <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': inverted}">
             <button type="button" class="btn btn-light d-block action-button" (click)="openMeAction()" 
-                title="Me">
+                title="{{ 'canasta.me' | translate }}">
                     <fa-icon [icon]="['fas', 'laptop']"></fa-icon>
             </button> 
           </div>
@@ -98,7 +104,7 @@
       </div>
       <div class="col-2" [ngClass]="{'order-2': !inverted, 'order-1': inverted}">
           <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': !inverted}">
-                <button type="button" class="btn btn-light d-block action-button" (click)="openOpponent2Action()" title="Opponent 2">
+                <button type="button" class="btn btn-light d-block action-button" (click)="openOpponent2Action()" title="{{ 'canasta.opponent2' | translate }}">
                  <fa-icon [icon]="['fas', 'user-secret']"></fa-icon>
                 </button> 
           </div>

@@ -7,6 +7,7 @@ import { PlayerService } from './model/player/player.service';
 import { StateService } from './model/state/state.service';
 import { PlayerActionComponent } from './player-action/player-action.component';
 import { PlayerEnum } from './model/player.enum';
+import { TranslateService } from '@ngx-translate/core';
 
 declare var $: any;
 
@@ -33,7 +34,10 @@ export class AppComponent implements OnInit {
     @Inject('me') public me: PlayerService,
     @Inject('partner') public partner: PlayerService,
     @Inject('opponent1') public opponent1: PlayerService,
-    @Inject('opponent2') public opponent2: PlayerService){ }
+    @Inject('opponent2') public opponent2: PlayerService,
+    private translate: TranslateService){ 
+      translate.setDefaultLang('en');
+    }
 
   ngOnInit() {
   }
@@ -84,5 +88,11 @@ export class AppComponent implements OnInit {
   openOpponent2Action(){
     this.currentPlayer = PlayerEnum.OPPONENT2;
     this.opponent2Action.open();
+  }
+  usePortuguese(){
+    this.translate.use('pt');
+  }
+  useEnglish(){
+    this.translate.use('en');
   }
 }

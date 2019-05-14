@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Action</h5>
+          <h5 class="modal-title">{{ 'canasta.player-action.action' | translate }}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -19,7 +19,7 @@
                               (click)="selectAction(action)"
                               id="{{ 'btnAction' + i }}"
                               [ngClass]="{ 'active': currentAction.type == action}"
-                              [hidden]="desactiveAction">{{action}}</button>
+                              [hidden]="desactiveAction">{{ action | translate }}</button>
                         </div>
                     </div>
                     <span *ngIf="desactiveAction">{{ currentAction.type }}</span>
@@ -50,7 +50,7 @@
                     (dblclick)="selectJokerAndDoAction()"
                     id="btnJoker"
                     [ngClass]="{ 'active': isJokerSelected() }">
-                    JOKER
+                    {{ 'canasta.player-action.joker' | translate }}
                   </button>
                 </div>
 
@@ -59,18 +59,18 @@
             <div class="d-flex flex-row justify-content-center mt-3" *ngIf="isCardSelectionNeeded() && mustShowMyHandAction()" id="handCardSelectionSection">
                 <canasta-card-selection [source]="handSelection"></canasta-card-selection>
                 <div class="alert alert-light text-center" role="alert" *ngIf="handSelection.length == 0">  
-                    Empty hand
+                  {{ 'canasta.player-action.emptyHand' | translate }}
               </div>
             </div>
 
             <div class="alert alert-light text-center" role="alert" *ngIf="!isCardSelectionNeeded()">  
-                  No card selection needed
+                {{ 'canasta.player-action.noCardSelection' | translate }}
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" id="do-action-and-close-button" class="btn btn-primary" (click)="doActionAndClose()">Do action and close</button>
-          <button type="button" id="do-action-button" class="btn btn-secondary" (click)="doAction()">Do action</button>
+          <button type="button" id="do-action-and-close-button" class="btn btn-primary" (click)="doActionAndClose()">{{ 'canasta.player-action.doActionClose' | translate }}</button>
+          <button type="button" id="do-action-button" class="btn btn-secondary" (click)="doAction()">{{ 'canasta.player-action.doAction' | translate }}</button>
         </div>
       </div>
     </div>
