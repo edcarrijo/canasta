@@ -26,7 +26,6 @@
                 </div>
             </div>
             <div *ngIf="isCardSelectionNeeded() && !mustShowMyHandAction()" id="newCardSelectionSection2">
- 
                 <div class="d-flex flex-row justify-content-center">
                   <canasta-card [card]="{ value: currentAction.value, suit: currentAction.suit }"></canasta-card>
                 </div>
@@ -59,6 +58,13 @@
             
             <div class="d-flex flex-row justify-content-center mt-3" *ngIf="isCardSelectionNeeded() && mustShowMyHandAction()" id="handCardSelectionSection">
                 <canasta-card-selection [source]="handSelection"></canasta-card-selection>
+                <div class="alert alert-light text-center" role="alert" *ngIf="handSelection.length == 0">  
+                    Empty hand
+              </div>
+            </div>
+
+            <div class="alert alert-light text-center" role="alert" *ngIf="!isCardSelectionNeeded()">  
+                  No card selection needed
             </div>
           </form>
         </div>
