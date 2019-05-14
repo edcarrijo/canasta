@@ -22,7 +22,7 @@
                               [hidden]="desactiveAction">{{ action | translate }}</button>
                         </div>
                     </div>
-                    <span *ngIf="desactiveAction">{{ currentAction.type }}</span>
+                    <span *ngIf="desactiveAction">{{ currentAction.type | translate }}</span>
                 </div>
             </div>
             <div *ngIf="isCardSelectionNeeded() && !mustShowMyHandAction()" id="newCardSelectionSection2">

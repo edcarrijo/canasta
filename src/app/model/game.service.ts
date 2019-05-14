@@ -7,6 +7,10 @@ import { Game } from './state/game';
 @Injectable()
 export class GameService{
 
+    private CARD_SCORE = 10;
+    private CANASTA_SCORE = 100;
+    private CLEAN_CANASTA_SCORE = 200;
+
     constructor(public game: Game){
     }
 
@@ -30,6 +34,26 @@ export class GameService{
         else{
             this.game.melds.push(<Meld>{ cards: cardList});
         }
+        this.game.currentScore = this.calculateTableScore();
+    }
+
+    calculateTableScore():number{
+        let totalCards = 0;
+        let canastaCount = 0;
+        let cleanCanastaCount = 0;
+        this.game.melds.forEach(meld => {
+            totalCards += meld.cards.length;
+            if(meld.cards.length >= 7){
+                let hasWildcard = meld.cards.some(card => card.value.rank == 2 || card.value.rank == 0);
+                if(hasWildcard)
+                    canastaCount++;
+                else
+                    cleanCanastaCount++;
+            }
+        });
+        return (totalCards * this.CARD_SCORE) + 
+            (canastaCount * this.CANASTA_SCORE) + 
+            (cleanCanastaCount * this.CLEAN_CANASTA_SCORE);
     }
 }
 

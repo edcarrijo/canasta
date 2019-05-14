@@ -53,7 +53,7 @@
               <canasta-card *ngFor="let card of state.play.table.opponentGame.redThrees" [card]="card"></canasta-card>
           </div>
           <div class="col">
-              <p>{{ 'canasta.opponentSide' | translate }}</p>
+              <p>{{ 'canasta.opponentSide' | translate }} : {{ state.play.table.opponentGame.currentScore }} pts</p>
               <canasta-card-meld *ngFor="let meld of state.play.table.opponentGame.melds; let i = index" [meld]="meld" (addCardClick)="addMeldCard($event, i)"></canasta-card-meld>
           </div>
       </div>
@@ -79,7 +79,7 @@
               <canasta-card *ngFor="let card of state.play.table.myGame.redThrees" [card]="card"></canasta-card>
           </div>
           <div class="col">
-              <p>{{ 'canasta.mySide' | translate }}</p>
+              <p>{{ 'canasta.mySide' | translate }} : {{ state.play.table.myGame.currentScore }} pts</p>
               <canasta-card-meld *ngFor="let meld of state.play.table.myGame.melds; let i = index" 
                 [meld]="meld"
                 (addCardClick)="addMeldCard($event, i)"></canasta-card-meld>
@@ -97,8 +97,8 @@
           </div>
         <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': inverted}">
             <div class="d-inline" *ngFor="let card of state.play.me.hand">
-                    <canasta-card *ngIf="!hideMyHand" [card]="card" [ngClass]="{'float-right': inverted}"></canasta-card>
-                    <canasta-card-back *ngIf="hideMyHand"></canasta-card-back>
+                <canasta-card *ngIf="!hideMyHand" [card]="card" [ngClass]="{'float-right': inverted}"></canasta-card>
+                <canasta-card-back *ngIf="hideMyHand"></canasta-card-back>
             </div>
         </div>
       </div>
