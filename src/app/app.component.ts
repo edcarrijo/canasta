@@ -6,6 +6,7 @@ import { MePlayerService } from './model/player/me-player.service';
 import { PlayerService } from './model/player/player.service';
 import { StateService } from './model/state/state.service';
 import { PlayerActionComponent } from './player-action/player-action.component';
+import { PlayerEnum } from './model/player.enum';
 
 declare var $: any;
 
@@ -20,8 +21,12 @@ export class AppComponent implements OnInit {
   myHandSelection: CardSelectionModel[] = [];
   inverted = false;
   hideMyHand = false;
+  currentPlayer: PlayerEnum;
 
   @ViewChild('meAction') meAction: PlayerActionComponent;
+  @ViewChild('partnerAction') partnerAction: PlayerActionComponent;
+  @ViewChild('opponent1Action') opponent1Action: PlayerActionComponent;
+  @ViewChild('opponent2Action') opponent2Action: PlayerActionComponent;
 
   constructor(
     public state: StateService,
@@ -54,6 +59,30 @@ export class AppComponent implements OnInit {
     this.hideMyHand = !this.hideMyHand;
   }
   addMeldCard(cardIndex, meldIndex){
-    this.meAction.open(meldIndex, cardIndex);
+    if(this.currentPlayer == PlayerEnum.ME)
+      this.meAction.open(meldIndex, cardIndex);
+    else if(this.currentPlayer == PlayerEnum.PARTNER)
+      this.partnerAction.open(meldIndex, cardIndex);
+    else if(this.currentPlayer == PlayerEnum.OPPONENT1)
+      this.opponent1Action.open(meldIndex, cardIndex);
+    else if(this.currentPlayer == PlayerEnum.OPPONENT2)
+      this.opponent2Action.open(meldIndex, cardIndex);
+  }
+
+  openMeAction(){
+    this.currentPlayer = PlayerEnum.ME;
+    this.meAction.open();
+  }
+  openPartnerAction(){
+    this.currentPlayer = PlayerEnum.PARTNER;
+    this.partnerAction.open();
+  }
+  openOpponent1Action(){
+    this.currentPlayer = PlayerEnum.OPPONENT1;
+    this.opponent1Action.open();
+  }
+  openOpponent2Action(){
+    this.currentPlayer = PlayerEnum.OPPONENT2;
+    this.opponent2Action.open();
   }
 }
