@@ -21,51 +21,59 @@
     
     <div class="row justify-content-md-center">
       <div [ngClass]="{'col order-1': !inverted, 'col-2 order-2': inverted}">
-          <button type="button" class="btn btn-light d-block action-button" (click)="opponent1Action.open()" title="Opponent 1">
-                <fa-icon [icon]="['fas', 'user-ninja']"></fa-icon>
-          </button> 
-          <canasta-card-back [count]="state.play.opponent1.handCount" ></canasta-card-back>
+          <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': inverted}">
+                <button type="button" class="btn btn-light d-block action-button" (click)="opponent1Action.open()" title="Opponent 1">
+                 <fa-icon [icon]="['fas', 'user-secret']"></fa-icon>
+                </button> 
+          </div>
+          <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': inverted}">
+                <canasta-card-back [count]="state.play.opponent1.handCount"></canasta-card-back>
+          </div>
       </div>
       <div [ngClass]="{'col-2 order-2': !inverted, 'col order-1': inverted}">
-          <button type="button" class="btn btn-light d-block action-button" (click)="partnerAction.open()" title="Partner">
-                <fa-icon [icon]="['far', 'grin-beam-sweat']"></fa-icon>
-          </button> 
-          <canasta-card-back [count]="state.play.partner.handCount"></canasta-card-back>
+          <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': !inverted}">
+                <button type="button" class="btn btn-light d-block action-button" (click)="partnerAction.open()" title="Partner">
+                        <fa-icon [icon]="['fas', 'user-shield']"></fa-icon>
+                  </button> 
+          </div>
+          <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': !inverted}">
+                <canasta-card-back [count]="state.play.partner.handCount"></canasta-card-back>
+          </div>
       </div>
     </div>
     <div class="game-table">
       <div class="row">
           <div class="col-2">
-              <p>Red threes</p>
               <canasta-card *ngFor="let card of state.play.table.opponentGame.redThrees" [card]="card"></canasta-card>
           </div>
           <div class="col">
-              <p>Oponnent's table</p>
+              <p>OPPONENT SIDE</p>
               <canasta-card-meld *ngFor="let meld of state.play.table.opponentGame.melds" [meld]="meld"></canasta-card-meld>
           </div>
       </div>
-      <div class="row neutral-zone">
-          <div class="col">
-              <p>Side deck</p>
-              <canasta-card-back *ngIf="state.play.table.sideDeck1Avaible"></canasta-card-back>
-              <canasta-card-back *ngIf="state.play.table.sideDeck2Avaible"></canasta-card-back>
-          </div>
-          <div class="col">
-              <p>Discard</p>
-              <canasta-card *ngIf="lastDiscard" [card]="lastDiscard"></canasta-card>
-          </div>
-          <div class="col">
-              <p>Main deck</p>
-              <canasta-card-back [count]="state.play.table.maindDeckCount"></canasta-card-back>
+      <div class="neutral-zone">
+          <div class="d-flex flex-row justify-content-between">
+            <div>
+                <p>SIDE DECK</p>
+                <canasta-card-back *ngIf="state.play.table.sideDeck1Avaible"></canasta-card-back>
+                <canasta-card-back *ngIf="state.play.table.sideDeck2Avaible"></canasta-card-back>
+            </div>
+            <div>
+                <p>DISCARD</p>
+                <canasta-card *ngIf="lastDiscard" [card]="lastDiscard"></canasta-card>
+            </div>
+            <div>
+                <p>DECK</p>
+                <canasta-card-back [count]="state.play.table.maindDeckCount"></canasta-card-back>
+            </div>
           </div>
       </div>
       <div class="row">
           <div class="col-2">
-              <p>Red threes</p>
               <canasta-card *ngFor="let card of state.play.table.myGame.redThrees" [card]="card"></canasta-card>
           </div>
           <div class="col">
-              <p>My table</p>
+              <p>MY SIDE</p>
               <canasta-card-meld *ngFor="let meld of state.play.table.myGame.melds; let i = index" 
                 [meld]="meld"
                 (addCardClick)="addMeldCard($event, i)"></canasta-card-meld>
@@ -75,22 +83,28 @@
     
     <div class="row">
       <div class="col" [ngClass]="{'order-1': !inverted, 'order-2': inverted}">
-        <button type="button" class="btn btn-light d-block action-button" (click)="meAction.open()" 
-            title="Me"
-            [ngClass]="{'float-right': inverted}">
-                <fa-icon [icon]="['far', 'grin-beam']"></fa-icon>
-        </button> 
-        <div class="d-inline" *ngFor="let card of state.play.me.hand">
-            <canasta-card *ngIf="!hideMyHand" [card]="card" [ngClass]="{'float-right': inverted}"></canasta-card>
-            <canasta-card-back *ngIf="hideMyHand"></canasta-card-back>
+          <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': inverted}">
+            <button type="button" class="btn btn-light d-block action-button" (click)="meAction.open()" 
+                title="Me">
+                    <fa-icon [icon]="['fas', 'laptop']"></fa-icon>
+            </button> 
+          </div>
+        <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': inverted}">
+            <div class="d-inline" *ngFor="let card of state.play.me.hand">
+                    <canasta-card *ngIf="!hideMyHand" [card]="card" [ngClass]="{'float-right': inverted}"></canasta-card>
+                    <canasta-card-back *ngIf="hideMyHand"></canasta-card-back>
+            </div>
         </div>
-        
       </div>
       <div class="col-2" [ngClass]="{'order-2': !inverted, 'order-1': inverted}">
-          <button type="button" class="btn btn-light d-block action-button" (click)="opponent2Action.open()" title="Opponent 2">
-            <fa-icon [icon]="['fas', 'user-ninja']"></fa-icon>
-          </button> 
-          <canasta-card-back [count]="state.play.opponent2.handCount"></canasta-card-back>
+          <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': !inverted}">
+                <button type="button" class="btn btn-light d-block action-button" (click)="opponent2Action.open()" title="Opponent 2">
+                 <fa-icon [icon]="['fas', 'user-secret']"></fa-icon>
+                </button> 
+          </div>
+          <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': !inverted}">
+                <canasta-card-back [count]="state.play.opponent2.handCount"></canasta-card-back>
+          </div>
       </div>
     </div>
     </div>

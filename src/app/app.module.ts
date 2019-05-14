@@ -13,7 +13,7 @@ import { OtherPlayerService } from './model/player/other-player.service';
 import { PlayerActionComponent } from './player-action/player-action.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUserNinja, faUser, faExchangeAlt, faUndoAlt, faPlus, faCaretRight, faCaretLeft, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { faUserNinja, faUser, faExchangeAlt, faUndoAlt, faPlus, faCaretRight, faCaretLeft, faEyeSlash, faUserSecret, faUserAstronaut, faUserShield, faChalkboardTeacher, faLaptop } from '@fortawesome/free-solid-svg-icons'
 import { faGrinBeam, faGrinBeamSweat } from '@fortawesome/free-regular-svg-icons'
 import { StateService } from './model/state/state.service';
 import { TableService } from './model/table.service';
@@ -78,6 +78,11 @@ export class AppModule {
       faPlus,
       faCaretRight,
       faCaretLeft,
-      faEyeSlash);
+      faEyeSlash,
+      faUserSecret,
+      faUserAstronaut,
+      faUserShield,
+      faChalkboardTeacher,
+      faLaptop);
   }
 }

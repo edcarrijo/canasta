@@ -5,7 +5,7 @@
           <span class="suit-corner">{{ card.suit.symbol }}</span>
       </div>
       
-      <span *ngIf="card.value.rank > 10" class="face middle_center">
+      <span *ngIf="card.value.rank > 10 || card.value.rank == 0" class="face middle_center">
           <img [src]="getImagePath()">
       </span>
       <div *ngIf="card.value.rank <= 10">

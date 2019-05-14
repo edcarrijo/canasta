@@ -142,5 +142,17 @@ export class PlayerActionComponent implements OnInit {
     this.doAction();
   }
 
+  selectJoker(){
+    this.selectCard(CardSuit.SPADE, CardValue.JOKER);
+  }
+  selectJokerAndDoAction(){
+    this.selectCard(CardSuit.SPADE, CardValue.JOKER);
+    this.doAction();
+  }
+
+  isJokerSelected(){
+    return this.currentAction.value == CardValue.JOKER;
+  }
+
 
 }
