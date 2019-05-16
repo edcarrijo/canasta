@@ -1,5 +1,9 @@
 {
     "canasta":{
+        "newGame": "Novo jogo",
+        "numberOfPlayers": "Número de jogadores",
+        "numberOfJokers": "Número de coringas",
+        "start": "Jogar",
         "mySide": "MINHA MESA",
         "opponentSide": "MESA OPONENTE",
         "discardPile": "DESCARTE",
