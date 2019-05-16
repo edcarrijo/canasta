@@ -4,8 +4,9 @@ import { Player } from './player';
 
 export class Table{
     static TOTAl_DECK_CARDS = 52;
-    static TOTAL_EXTRA_JOKER = 0;
     static HAND_COUNT = 11;
+    static NUMBER_OF_DECKS = 2;
+    static NUMBER_OF_SIDE_DECKS = 2;
 
     public maindDeckCount: number;
     public discardPile: Card[];
@@ -16,10 +17,20 @@ export class Table{
     constructor(){
         this.discardPile = [];
 
-        var totalCardsOutsideDeck = Table.HAND_COUNT * 5;
-        this.maindDeckCount = ((Table.TOTAl_DECK_CARDS * 2) - totalCardsOutsideDeck) + Table.TOTAL_EXTRA_JOKER;
-
         this.myGame = new Game();
         this.opponentGame = new Game();
+    }
+
+    initializeDeck(numberOfJokers: number, numberOfPlayers: number){
+
+        numberOfJokers = parseInt(numberOfJokers.toString());
+        numberOfPlayers = parseInt(numberOfPlayers.toString());
+
+        var numberOfCardsInOthersPlayersHands = (numberOfPlayers-1) * Table.HAND_COUNT;
+        var numberOfCardsInSideDeck = Table.HAND_COUNT * Table.NUMBER_OF_SIDE_DECKS;
+        var totalCardsOutsideDeck = numberOfCardsInOthersPlayersHands + numberOfCardsInSideDeck;
+        var totalCardsInDeck = (Table.TOTAl_DECK_CARDS * Table.NUMBER_OF_DECKS) - totalCardsOutsideDeck;
+
+        this.maindDeckCount = totalCardsInDeck + numberOfJokers;
     }
 }

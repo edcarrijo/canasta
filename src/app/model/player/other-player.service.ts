@@ -34,6 +34,7 @@ export class OtherPlayerService extends PlayerService{
 
     addMeld(cardList: Card[], meldIndex?: number, cardIndex?: number) {
         this._game.addMeld(cardList, meldIndex, cardIndex);
+        this.player.handCount--;
     }
 
     goOut(){

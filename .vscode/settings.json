@@ -1,0 +1,5 @@
+{
+    "appService.showBuildDuringDeployPrompt": false,
+    "appService.deploySubpath": "dist/canasta",
+    "appService.defaultWebAppToDeploy": "/subscriptions/7f243203-a93b-42b3-b183-bf88dcc542c5/resourceGroups/Canasta2/providers/Microsoft.Web/sites/canastaweb"
+}

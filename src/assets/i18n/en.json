@@ -1,5 +1,9 @@
 {
     "canasta":{
+        "newGame": "New game",
+        "numberOfPlayers": "Number of players",
+        "numberOfJokers": "Number of jokers",
+        "start": "Start",
         "mySide": "MY SIDE",
         "opponentSide": "OPPONENT SIDE",
         "discardPile": "DISCARD",

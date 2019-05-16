@@ -1,4 +1,4 @@
-<div class="row justify-content-end">
+<div class="row justify-content-end" >
     <div class="col offset-11">
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
             <div class="btn-group mr-2" role="group" aria-label="First group">
@@ -23,12 +23,12 @@
 </div>
 
 <main class="p-3">
-  <div class="fluid-container">
+  <div class="fluid-container" *ngIf="state.play">
     
     <div class="row justify-content-md-center">
       <div [ngClass]="{'col order-1': !inverted, 'col-2 order-2': inverted}">
           <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': inverted}">
-                <button type="button" class="btn btn-light d-block action-button" (click)="openOpponent2Action()" title="{{ 'canasta.opponent1' | translate }}">
+                <button type="button" class="btn btn-light d-block action-button" (click)="openOpponent1Action()" title="{{ 'canasta.opponent1' | translate }}">
                     <fa-icon [icon]="['fas', 'user-secret']"></fa-icon>
                 </button> 
           </div>
@@ -36,11 +36,11 @@
                 <canasta-card-back [count]="state.play.opponent1.handCount"></canasta-card-back>
           </div>
       </div>
-      <div [ngClass]="{'col-2 order-2': !inverted, 'col order-1': inverted}">
+      <div [ngClass]="{'col-2 order-2': !inverted, 'col order-1': inverted}" *ngIf="state.play.partner.isActive">
           <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': !inverted}">
                 <button type="button" class="btn btn-light d-block action-button" (click)="openPartnerAction()" title="{{ 'canasta.partner' | translate }}">
-                        <fa-icon [icon]="['fas', 'user-shield']"></fa-icon>
-                  </button> 
+                    <fa-icon [icon]="['fas', 'user-shield']"></fa-icon>
+                </button> 
           </div>
           <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': !inverted}">
                 <canasta-card-back [count]="state.play.partner.handCount"></canasta-card-back>
@@ -102,7 +102,7 @@
             </div>
         </div>
       </div>
-      <div class="col-2" [ngClass]="{'order-2': !inverted, 'order-1': inverted}">
+      <div class="col-2" [ngClass]="{'order-2': !inverted, 'order-1': inverted}" *ngIf="state.play.opponent2.isActive">
           <div class="d-flex flex-row" [ngClass]="{'flex-row-reverse': !inverted}">
                 <button type="button" class="btn btn-light d-block action-button" (click)="openOpponent2Action()" title="{{ 'canasta.opponent2' | translate }}">
                  <fa-icon [icon]="['fas', 'user-secret']"></fa-icon>
@@ -116,11 +116,76 @@
     </div>
 </main>
 
-<canasta-player-action [player]="me" [hand]="state.play.me.hand" modalId="meAction" (actionDone)="actionDone($event)" #meAction></canasta-player-action>
-<canasta-player-action [player]="partner" [hand]="state.play.partner.hand" modalId="partnerAction" (actionDone)="actionDone($event)" #partnerAction></canasta-player-action>
-<canasta-player-action [player]="opponent1" [hand]="state.play.opponent1.hand" modalId="opponent1Action" (actionDone)="actionDone($event)" #opponent1Action></canasta-player-action>
-<canasta-player-action [player]="opponent2" [hand]="state.play.opponent2.hand" modalId="opponent2Action" (actionDone)="actionDone($event)" #opponent2Action></canasta-player-action>
+<canasta-player-action [player]="me" 
+    [hand]="state.play.me.hand" 
+    modalId="meAction" 
+    (actionDone)="actionDone($event)" 
+    #meAction></canasta-player-action>
+<canasta-player-action *ngIf="state.play.partner.isActive" 
+    [player]="partner" 
+    [hand]="state.play.partner.hand" 
+    modalId="partnerAction" 
+    (actionDone)="actionDone($event)" 
+    #partnerAction></canasta-player-action>
+<canasta-player-action [player]="opponent1" 
+    [hand]="state.play.opponent1.hand" 
+    modalId="opponent1Action" 
+    (actionDone)="actionDone($event)" 
+    #opponent1Action></canasta-player-action>
+<canasta-player-action *ngIf="state.play.opponent2.isActive" 
+    [player]="opponent2" 
+    [hand]="state.play.opponent2.hand" 
+    modalId="opponent2Action" 
+    (actionDone)="actionDone($event)" 
+    #opponent2Action></canasta-player-action>
 
-<pre hidden>
-  {{ state.table | json }}
-</pre>
+
+<div class="modal fade" id="initilizeWindow" tabindex="-1" role="dialog" data-backdrop="static">
+        <div class="modal-dialog modal-md" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">{{ 'canasta.newGame' | translate }}</h5>
+            </div>
+            <div class="modal-body">
+              <form>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label for="number-of-players" class="col-form-label">{{ 'canasta.numberOfPlayers' | translate }}</label>
+                            <select class="form-control" id="number-of-players" name="type-action" [(ngModel)]="numberOfPlayers">
+                                <option value="2">2</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="number-of-jokers" class="col-form-label">{{ 'canasta.numberOfJokers' | translate }}</label>
+                            <select class="form-control" id="number-of-jokers" name="type-action" [(ngModel)]="numberOfJokers">
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                        </div>
+
+                    </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-between w-100">
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                            <button type="button" class="btn btn-secondary" (click)="usePortuguese()">
+                                PT
+                            </button>
+                            <button type="button" class="btn btn-secondary" (click)="useEnglish()">
+                                EN
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" id="begin-game" class="btn btn-primary" (click)="startGame()">{{ 'canasta.start' | translate }}</button>
+                </div>
+                    
+            </div>
+          </div>
+        </div>
+      </div>

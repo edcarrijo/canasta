@@ -10,10 +10,16 @@ export class Play{
     public table: Table;
 
     constructor(){
-        this.me = new Player();
-        this.partner = new Player();
-        this.opponent1 = new Player();
-        this.opponent2 = new Player();
-        this.table = new Table();
+
+    }
+
+    initialize(numberOfJokers: number, numberOfPlayers: number){
+        this.table.initializeDeck(numberOfJokers, numberOfPlayers);
+        this.me.isActive = true;
+        this.opponent1.isActive = true;
+        if(numberOfPlayers == 4){
+            this.partner.isActive = true;
+            this.opponent2.isActive = true;
+        }
     }
 }

@@ -14,24 +14,26 @@ export class StateService{
 
     
     constructor(){
-        this.initialize();
+        this.play = new Play();
     }
 
-    public initialize(){
-        this.play = new Play();
-       
+    public initialize(numberOfJokers: number, numberOfPlayers: number){
+        this.play.initialize(numberOfJokers, numberOfPlayers);
         this.undoHistory = new UndoHistory<Play>(this.play);
     }
 
-    public createTable():Table{
-        this.play.table = new Table();
+    private createTable():Table{
+        if(!this.play.table)
+            this.play.table = new Table();
         return this.play.table;
     }
     public createMyGame():Game{
+        this.createTable();
         this.play.table.myGame = new Game();
         return this.play.table.myGame;
     }
     public createOpponentGame():Game{
+        this.createTable();
         this.play.table.opponentGame = new Game();
         return this.play.table.opponentGame;
     }
@@ -73,7 +75,7 @@ export class StateService{
         this.play.table.opponentGame.melds = previousState.table.opponentGame.melds;
         this.play.table.opponentGame.currentScore = previousState.table.opponentGame.currentScore;
         this.play.table.opponentGame.goneOutOnce = previousState.table.opponentGame.goneOutOnce;
-        
+
         this.play.me.hand = previousState.me.hand;
         this.play.partner.handCount = previousState.partner.handCount;
         this.play.opponent1.handCount = previousState.opponent1.handCount;

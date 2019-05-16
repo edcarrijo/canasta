@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, HostListener } from '@angular/core';
 import { Action } from './model/action';
 import { Card } from './model/card';
 import { CardSelectionModel } from './card-selection/card-selection.model';
@@ -8,6 +8,7 @@ import { StateService } from './model/state/state.service';
 import { PlayerActionComponent } from './player-action/player-action.component';
 import { PlayerEnum } from './model/player.enum';
 import { TranslateService } from '@ngx-translate/core';
+import { CanDeactivate } from '@angular/router/src/utils/preactivation';
 
 declare var $: any;
 
@@ -23,11 +24,18 @@ export class AppComponent implements OnInit {
   inverted = false;
   hideMyHand = false;
   currentPlayer: PlayerEnum;
+  numberOfPlayers = 4;
+  numberOfJokers = 4;
 
   @ViewChild('meAction') meAction: PlayerActionComponent;
   @ViewChild('partnerAction') partnerAction: PlayerActionComponent;
   @ViewChild('opponent1Action') opponent1Action: PlayerActionComponent;
   @ViewChild('opponent2Action') opponent2Action: PlayerActionComponent;
+
+  @HostListener('window:beforeunload')
+  canDeactivate(): boolean{
+    return false;
+  }
 
   constructor(
     public state: StateService,
@@ -40,6 +48,7 @@ export class AppComponent implements OnInit {
     }
 
   ngOnInit() {
+    $('#initilizeWindow').modal('show');
   }
 
   actionDone(action: string){
@@ -94,5 +103,9 @@ export class AppComponent implements OnInit {
   }
   useEnglish(){
     this.translate.use('en');
+  }
+  startGame(){
+    this.state.initialize(this.numberOfJokers, this.numberOfPlayers);
+    $('#initilizeWindow').modal('hide');
   }
 }

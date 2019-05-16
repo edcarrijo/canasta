@@ -1,5 +1,28 @@
 {
     "canasta":{
-        "mySide": "MINHA MESA"
+        "mySide": "MY SIDE",
+        "opponentSide": "OPPONENT SIDE",
+        "discardPile": "DISCARD",
+        "deck": "DECK",
+        "sideDeck": "SIDE DECK",
+        "me": "Me",
+        "partner": "Partner",
+        "opponent1": "Opponent 1",
+        "opponent2": "Opponent 2",
+        "player-action":{
+            "action": "Action",
+            "draw": "Draw",
+            "addRedThree": "Add red three",
+            "discard": "Discard",
+            "pickUpDiscard": "Pick up discard",
+            "addMeld": "Add meld",
+            "goOut": "Go out",
+            "emptyHand": "Empty hand",
+            "noCardSelection": "No card selection needed",
+            "doAction": "Do action",
+            "doActionClose": "Do action and close",
+            "joker": "JOKER"
+        }
+        
     }
 }
