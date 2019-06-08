@@ -120,23 +120,27 @@
     [hand]="state.play.me.hand" 
     modalId="meAction" 
     (actionDone)="actionDone($event)" 
+    [showAsModal]="true"
     #meAction></canasta-player-action>
 <canasta-player-action *ngIf="state.play.partner.isActive" 
     [player]="partner" 
     [hand]="state.play.partner.hand" 
     modalId="partnerAction" 
     (actionDone)="actionDone($event)" 
+    [showAsModal]="true"
     #partnerAction></canasta-player-action>
 <canasta-player-action [player]="opponent1" 
     [hand]="state.play.opponent1.hand" 
     modalId="opponent1Action" 
     (actionDone)="actionDone($event)" 
+    [showAsModal]="true"
     #opponent1Action></canasta-player-action>
 <canasta-player-action *ngIf="state.play.opponent2.isActive" 
     [player]="opponent2" 
     [hand]="state.play.opponent2.hand" 
     modalId="opponent2Action" 
-    (actionDone)="actionDone($event)" 
+    (actionDone)="actionDone($event)"
+    [showAsModal]="true" 
     #opponent2Action></canasta-player-action>
 
 

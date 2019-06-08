@@ -14,12 +14,14 @@ export class PlayerActionComponent implements OnInit {
   @Input() modalId: string;
   @Output() actionDone = new EventEmitter<string>();
   @Input() hand: Card[];
-
+  @Input() showAsModal: boolean;
+  
   cardValueList: CardValue[];
   cardSuitList: CardSuit[];
   actionList: string[];
   handSelection: CardSelectionModel[] = [];
   desactiveAction: boolean;
+
 
   private cardIndex: number;
   private meldIndex: number;

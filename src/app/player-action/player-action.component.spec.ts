@@ -7,6 +7,7 @@ import { CardSelectionComponent } from '../card-selection/card-selection.compone
 import { CardComponent } from '../card/card.component';
 import { By } from '@angular/platform-browser';
 import { StateService } from '../model/state/state.service';
+import { TranslateTestingModule } from '../translate-service-stub';
 
 
 describe('PlayerActionComponent with card hand selection', () => {
@@ -16,7 +17,7 @@ describe('PlayerActionComponent with card hand selection', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule],
+      imports: [FormsModule, TranslateTestingModule],
       declarations: [ PlayerActionComponent, CardSelectionComponent, CardComponent ]
     })
     .compileComponents();
@@ -167,7 +168,7 @@ describe('PlayerActionComponent with card hand selection', () => {
           jasmine.objectContaining({ value: CardValue.FIVE, suit: CardSuit.HEART }),
           jasmine.objectContaining({ value: CardValue.SIX, suit: CardSuit.HEART })
         ]
-      ));
+      ), undefined, undefined);
     }); 
   });
 
@@ -180,7 +181,7 @@ describe('PlayerActionComponent without card hand selection', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule],
+      imports: [FormsModule, TranslateTestingModule],
       declarations: [ PlayerActionComponent, CardSelectionComponent, CardComponent ]
     })
     .compileComponents();
@@ -295,7 +296,7 @@ describe('PlayerActionComponent without card hand selection', () => {
           [
             jasmine.objectContaining({ value: CardValue.ACE, suit: CardSuit.SPADE })
           ]
-        ));
+        ), undefined, undefined);
       });
     }); 
   });
@@ -305,12 +306,10 @@ describe('PlayerActionComponent without card hand selection', () => {
 function selectCard(fixture: ComponentFixture<PlayerActionComponent>, component: PlayerActionComponent, 
   cardValue: CardValue, cardSuit: CardSuit) {
   
-  const valueButton: HTMLButtonElement = fixture.nativeElement.querySelector(`#btnValue${cardValue.rank}`);
-  valueButton.click();
-  expect(component.currentAction.value).toBe(cardValue);
+  const cardButton: HTMLButtonElement = fixture.nativeElement.querySelector(`#btnValue${cardValue.rank}${cardSuit.id}`);
+  cardButton.click();
 
-  const suitButton: HTMLButtonElement = fixture.nativeElement.querySelector(`#btnSuit${cardSuit.id}`);
-  suitButton.click();
+  expect(component.currentAction.value).toBe(cardValue);
   expect(component.currentAction.suit).toBe(cardSuit);
 }
 
