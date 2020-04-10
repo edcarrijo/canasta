@@ -42,8 +42,7 @@ export class PlayerActionComponent implements OnInit {
   isCardSelectionNeeded():boolean{
     return this.currentAction.type == Action.ADD_RED_THREE || 
            this.currentAction.type == Action.MELD ||
-           this.currentAction.type == Action.DISCARD ||
-           (this.currentAction.type == Action.DRAW && this.player.getMustShowHandAction());
+           this.currentAction.type == Action.DISCARD;
   }
 
   open(meldIndex?: number, cardIndex?: number){
@@ -70,7 +69,7 @@ export class PlayerActionComponent implements OnInit {
    
     switch(this.currentAction.type){
       case Action.DRAW:
-        this.player.drawCard(this.getFirstSelectedCard(cardActionList));
+        this.player.drawCard();
         break;
       case Action.DISCARD:
         this.player.discard(this.getFirstSelectedCard(cardActionList));

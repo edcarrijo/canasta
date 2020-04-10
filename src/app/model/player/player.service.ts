@@ -10,7 +10,7 @@ export abstract class PlayerService{
     }
 
     abstract getMustShowHandAction(): boolean;
-    abstract drawCard(card: Card);
+    abstract drawCard();
     abstract discard(card: Card);
     abstract addRedThree(card: Card);
     abstract pickUpDiscardPile();

@@ -16,8 +16,9 @@ export class MePlayerService extends PlayerService{
         return true;
     }
 
-    drawCard(card: Card) {
+    drawCard() {
         this.tableService.removeCardFromMaindDeck();
+        var card = this.tableService.getRandomCard();
         this.player.hand.push(card);
     }
 
@@ -65,6 +66,10 @@ export class MePlayerService extends PlayerService{
     goOut(){
         if(this.player.hand.length != 0)
             throw new Error('You cannot go out with cards in your hand');
-        this._game.goOut();
+        var endGame = this._game.goOut();
+        if(!endGame){
+            var sideDeckCards = this.tableService.getSideDeckCards();
+            this.player.hand.push(...sideDeckCards);
+        }
     }
 }
