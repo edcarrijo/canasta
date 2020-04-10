@@ -14,7 +14,7 @@ export class OtherPlayerService extends PlayerService{
         return false;
     }
 
-    drawCard(card: Card) {
+    drawCard() {
         this.player.handCount++;
         this.tableService.removeCardFromMaindDeck();
     }    
